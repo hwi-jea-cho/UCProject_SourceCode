@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\UCProject.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{09E366A3-3458-4473-B79E-3335C4001A73}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\UCProject.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\UCProjectEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\.gitattributes" />
+    <None Include="..\..\.gitignore" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{92B6CCB8-E7DB-43F8-8CA3-E4ABBC3CAE1A}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\ConsumableList.csv">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\EquipmentItemList.csv">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\InteractorList.csv">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\InventoryItemList.csv">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\MentList.csv">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\PlayerWeaponList.csv">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\UCProject">
+      <UniqueIdentifier>{373C9827-4D01-4911-9DD9-9958C8C94730}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\CGameMode.cpp">
+      <Filter>Source\UCProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\CGameMode.h">
+      <Filter>Source\UCProject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UCProject\Global.h">
+      <Filter>Source\UCProject</Filter>
+    </ClInclude>
+    <None Include="..\..\Source\UCProject\UCProject.Build.cs">
+      <Filter>Source\UCProject</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\UCProject\UCProject.cpp">
+      <Filter>Source\UCProject</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\UCProject.h">
+      <Filter>Source\UCProject</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Actors">
+      <UniqueIdentifier>{2976AE85-D0FB-43B9-A2FE-673372A7BE5E}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Actors\CAttachment.cpp">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Actors\CAttachment.h">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Actors\CAttackment.cpp">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Actors\CAttackment.h">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Actors\CChest.cpp">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Actors\CChest.h">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Actors\CConsumableActor.cpp">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Actors\CConsumableActor.h">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Actors\CDropItemActor.cpp">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Actors\CDropItemActor.h">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Actors\CTalkableProp.cpp">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Actors\CTalkableProp.h">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Actors\CThrowItem.cpp">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Actors\CThrowItem.h">
+      <Filter>Source\UCProject\Actors</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Characters">
+      <UniqueIdentifier>{E02ECE93-829F-44AC-B57A-A000846153F3}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Characters\CAnimInstance.cpp">
+      <Filter>Source\UCProject\Characters</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Characters\CAnimInstance.h">
+      <Filter>Source\UCProject\Characters</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Characters\CAnimInstance_NPC.cpp">
+      <Filter>Source\UCProject\Characters</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Characters\CAnimInstance_NPC.h">
+      <Filter>Source\UCProject\Characters</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Characters\CPlayer.cpp">
+      <Filter>Source\UCProject\Characters</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Characters\CPlayer.h">
+      <Filter>Source\UCProject\Characters</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Characters\NonPlayerCharacter.cpp">
+      <Filter>Source\UCProject\Characters</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Characters\NonPlayerCharacter.h">
+      <Filter>Source\UCProject\Characters</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Components">
+      <UniqueIdentifier>{81C934CC-52CC-4700-A993-A88F60EF4DE3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\UCProject\Components\Actor">
+      <UniqueIdentifier>{33A95452-979F-4E4A-B5CB-861472ACEB5F}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Components\Actor\CInteractorComponent.cpp">
+      <Filter>Source\UCProject\Components\Actor</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Actor\CInteractorComponent.h">
+      <Filter>Source\UCProject\Components\Actor</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\Actor\CItemDropComponent.cpp">
+      <Filter>Source\UCProject\Components\Actor</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Actor\CItemDropComponent.h">
+      <Filter>Source\UCProject\Components\Actor</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\Actor\CTalkableComponent.cpp">
+      <Filter>Source\UCProject\Components\Actor</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Actor\CTalkableComponent.h">
+      <Filter>Source\UCProject\Components\Actor</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\Actor\CTeamComponent.cpp">
+      <Filter>Source\UCProject\Components\Actor</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Actor\CTeamComponent.h">
+      <Filter>Source\UCProject\Components\Actor</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Components\Attachment">
+      <UniqueIdentifier>{B8F1DA37-E510-42E7-9E3A-32DDB55169F7}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Components\Attachment\CComboComponent.cpp">
+      <Filter>Source\UCProject\Components\Attachment</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Attachment\CComboComponent.h">
+      <Filter>Source\UCProject\Components\Attachment</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Components\Character">
+      <UniqueIdentifier>{36883A8F-F671-48DF-8EC5-2E269A1A6890}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Components\Character\CEquipmentComponent.cpp">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Character\CEquipmentComponent.h">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\Character\CNpcPoseComponent.cpp">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Character\CNpcPoseComponent.h">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\Character\CStanceComponent.cpp">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Character\CStanceComponent.h">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\Character\CStateComponent.cpp">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Character\CStateComponent.h">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\Character\CStatusComponent.cpp">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\Character\CStatusComponent.h">
+      <Filter>Source\UCProject\Components\Character</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Components\PlayerOnly">
+      <UniqueIdentifier>{05148D11-39FF-41B5-9F49-CD67BFC46AF6}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Components\PlayerOnly\CCommendComponent.cpp">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\PlayerOnly\CCommendComponent.h">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\PlayerOnly\CInventoryComponent.cpp">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\PlayerOnly\CInventoryComponent.h">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\PlayerOnly\CLiteracyComponent.cpp">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\PlayerOnly\CLiteracyComponent.h">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\PlayerOnly\CMenuComponent.cpp">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\PlayerOnly\CMenuComponent.h">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\PlayerOnly\COptionComponent.cpp">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\PlayerOnly\COptionComponent.h">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\PlayerOnly\CPlayerMovementComponent.cpp">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\PlayerOnly\CPlayerMovementComponent.h">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\PlayerOnly\CQuickConsumableComponent.cpp">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\PlayerOnly\CQuickConsumableComponent.h">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Components\PlayerOnly\CTargetingComponent.cpp">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Components\PlayerOnly\CTargetingComponent.h">
+      <Filter>Source\UCProject\Components\PlayerOnly</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\DataAssets">
+      <UniqueIdentifier>{45CA3142-695B-48C3-BBF0-55E3ACC41D92}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\DataAssets\CComboData.cpp">
+      <Filter>Source\UCProject\DataAssets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\DataAssets\CComboData.h">
+      <Filter>Source\UCProject\DataAssets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\DataAssets\CDropRateData.cpp">
+      <Filter>Source\UCProject\DataAssets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\DataAssets\CDropRateData.h">
+      <Filter>Source\UCProject\DataAssets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\DataAssets\CWeaponData.cpp">
+      <Filter>Source\UCProject\DataAssets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\DataAssets\CWeaponData.h">
+      <Filter>Source\UCProject\DataAssets</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Notifies">
+      <UniqueIdentifier>{A8AA546A-E600-480A-B8CA-0F386C089D5E}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Notifies\CAnimNotifyState_Equip.cpp">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Notifies\CAnimNotifyState_Equip.h">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Notifies\CAnimNotifyState_Unequip.cpp">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Notifies\CAnimNotifyState_Unequip.h">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Notifies\CAnimNotify_Attacked.cpp">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Notifies\CAnimNotify_Attacked.h">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Notifies\CAnimNotify_Consum.cpp">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Notifies\CAnimNotify_Consum.h">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Notifies\CAnimNotify_EndConsum.cpp">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Notifies\CAnimNotify_EndConsum.h">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Notifies\CAnimNotify_Rolled.cpp">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Notifies\CAnimNotify_Rolled.h">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\TableDatas">
+      <UniqueIdentifier>{B9B40E32-BE22-4923-B6B6-D6E8AD1D5095}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\TableDatas\ConsumableDesc.cpp">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\TableDatas\ConsumableDesc.h">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\TableDatas\InteractorDesc.cpp">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\TableDatas\InteractorDesc.h">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\TableDatas\ItemDatas.cpp">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\TableDatas\ItemDatas.h">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\TableDatas\NonPlayerMent.cpp">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\TableDatas\NonPlayerMent.h">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\TableDatas\WeaponDesc.cpp">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\TableDatas\WeaponDesc.h">
+      <Filter>Source\UCProject\TableDatas</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Types">
+      <UniqueIdentifier>{D09DEB0E-4888-4801-A2FF-55D1A7A69091}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Types\CEquipmentItem.cpp">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Types\CEquipmentItem.h">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Types\CInventoryItem.cpp">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Types\CInventoryItem.h">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Types\CInventoryItem_Consumable.cpp">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Types\CInventoryItem_Consumable.h">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Types\CInventoryItem_Equipment.cpp">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Types\CInventoryItem_Equipment.h">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Types\CQuickConsumable_Staff.cpp">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Types\CQuickConsumable_Staff.h">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Types\CStatusInstance.cpp">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Types\CStatusInstance.h">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Types\MontageDesc.cpp">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Types\MontageDesc.h">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Utilities">
+      <UniqueIdentifier>{0ABA849B-3827-444F-A07D-7049FF86AD09}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\UCProject\Utilities\CHelpers.h">
+      <Filter>Source\UCProject\Utilities</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Utilities\CLog.cpp">
+      <Filter>Source\UCProject\Utilities</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Utilities\CLog.h">
+      <Filter>Source\UCProject\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UCProject\Utilities\Defines.h">
+      <Filter>Source\UCProject\Utilities</Filter>
+    </ClInclude>
+    <Filter Include="Source\UCProject\Widgets">
+      <UniqueIdentifier>{9FA5E2B4-BC66-4F42-804E-5B3C0C882E11}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Widgets\CUserWidget_Consumable.cpp">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Widgets\CUserWidget_Consumable.h">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Widgets\CUserWidget_Equipment.cpp">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Widgets\CUserWidget_Equipment.h">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Widgets\CUserWidget_Interactable.cpp">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Widgets\CUserWidget_Interactable.h">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Widgets\CUserWidget_Interactable_Unit.cpp">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Widgets\CUserWidget_Interactable_Unit.h">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Widgets\CUserWidget_Menu.cpp">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Widgets\CUserWidget_Menu.h">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Widgets\CUserWidget_QuickSlots.cpp">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Widgets\CUserWidget_QuickSlots.h">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Widgets\CUserWidget_Stackable.cpp">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Widgets\CUserWidget_Stackable.h">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Widgets\CUserWidget_Talkable.cpp">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Widgets\CUserWidget_Talkable.h">
+      <Filter>Source\UCProject\Widgets</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
