@@ -1,0 +1,8 @@
+---,EquipmentType,Status
+Sword,"Weapon","(MoveSpeed=0.000000,Hp=0.000000,Attack=0.000000,Armor=0.000000)"
+Balloon,"Weapon","(MoveSpeed=0.000000,Hp=0.000000,Attack=3.000000,Armor=0.000000)"
+ChickenBlade,"Weapon","(MoveSpeed=0.000000,Hp=0.000000,Attack=5.000000,Armor=0.000000)"
+ClothArmor,"Armor","(MoveSpeed=0.000000,Hp=10.000000,Attack=0.000000,Armor=2.000000)"
+ChainArmor,"Armor","(MoveSpeed=0.000000,Hp=20.000000,Attack=0.000000,Armor=3.000000)"
+Sunglasses,"Accessory","(MoveSpeed=100.000000,Hp=0.000000,Attack=0.000000,Armor=0.000000)"
+PassingNecklace,"Accessory","(MoveSpeed=200.000000,Hp=0.000000,Attack=0.000000,Armor=0.000000)"

@@ -1,0 +1,4 @@
+---,ConsumableClass,ConsumMontage
+Bomb,"BlueprintGeneratedClass'/Game/_MyWorld/Actors/Items/ConsumableItems/BP_CConsumable_Bomb.BP_CConsumable_Bomb_C'","(AnimMontage=AnimMontage'""/Game/_MyWorld/Animations/Kachujin/Montages/Common/Consum_Throw_Montage.Consum_Throw_Montage""',PlayRatio=1.000000,StartSction="""")"
+Dagger,"BlueprintGeneratedClass'/Game/_MyWorld/Actors/Items/ConsumableItems/BP_CConsumable_Dagger.BP_CConsumable_Dagger_C'","(AnimMontage=AnimMontage'""/Game/_MyWorld/Animations/Kachujin/Montages/Common/Consum_Throw_Montage.Consum_Throw_Montage""',PlayRatio=1.000000,StartSction="""")"
+Apple,"BlueprintGeneratedClass'/Game/_MyWorld/Actors/Items/ConsumableItems/BP_CConsumable_Apple.BP_CConsumable_Apple_C'","(AnimMontage=AnimMontage'""/Game/_MyWorld/Animations/Kachujin/Montages/Common/Consum_Self_Montage.Consum_Self_Montage""',PlayRatio=1.000000,StartSction="""")"
