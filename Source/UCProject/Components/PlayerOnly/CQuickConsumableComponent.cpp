@@ -28,22 +28,22 @@ void UCQuickConsumableComponent::BeginPlay()
 
 void UCQuickConsumableComponent::OnQuick1()
 {
-	OnQuick(QuickSlot1);
+	StartComsum(QuickSlot1->GetItemActor());
 }
 
 void UCQuickConsumableComponent::OnQuick2()
 {
-	OnQuick(QuickSlot2);
+	StartComsum(QuickSlot2->GetItemActor());
 }
 
 void UCQuickConsumableComponent::OnQuick3()
 {
-	OnQuick(QuickSlot3);
+	StartComsum(QuickSlot3->GetItemActor());
 }
 
 void UCQuickConsumableComponent::OnQuick4()
 {
-	OnQuick(QuickSlot4);
+	StartComsum(QuickSlot4->GetItemActor());
 }
 
 void UCQuickConsumableComponent::SetNullItemQuick1()
@@ -107,16 +107,6 @@ UCInventoryItem_Consumable* UCQuickConsumableComponent::GetItemQuick4()
 }
 
 
-void UCQuickConsumableComponent::OnQuick(UCQuickConsumable_Staff* InQuick)
-{
-	CurrQuickSlot = InQuick;
-	ACConsumableActor* actor = InQuick->GetItemActor();
-
-	CheckNull(actor);
-
-	actor->StartConsum();
-}
-
 void UCQuickConsumableComponent::SetNullItemQuick(UCQuickConsumable_Staff* InQuick)
 {
 	InQuick->SetNullConsumable();
@@ -127,4 +117,21 @@ void UCQuickConsumableComponent::SetItemQuick(UCQuickConsumable_Staff* InQuick, 
 	CheckNull(InConsumable);
 	InQuick->SetConsumable(InConsumable);
 
+}
+
+void UCQuickConsumableComponent::StartComsum(ACConsumableActor* InConsumable)
+{
+	CheckTrue(CurrQuickActor != nullptr);
+	CheckNull(InConsumable);
+
+	CurrQuickActor = InConsumable;
+	InConsumable->End_Consum.AddDynamic(this, &UCQuickConsumableComponent::End_Comsum);
+	InConsumable->StartConsum();
+}
+
+// ACConsumableActor::End_Consum
+void UCQuickConsumableComponent::End_Comsum()
+{
+	CurrQuickActor->End_Consum.RemoveDynamic(this, &UCQuickConsumableComponent::End_Comsum);
+	CurrQuickActor = nullptr;
 }

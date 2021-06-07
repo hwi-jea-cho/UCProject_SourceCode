@@ -25,7 +25,7 @@ public:
 		FORCEINLINE int32 GetStock() const { return Stock; }
 
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsConsumable() const { return ConsumableDesc != nullptr; }
+		FORCEINLINE bool IsEmpty() const { return ConsumableDesc == nullptr; }
 
 	FORCEINLINE const FConsumableDesc* GetConsumableDesc() const { return ConsumableDesc; };
 

@@ -4,6 +4,9 @@
 #include "UObject/NoExportTypes.h"
 #include "CQuickConsumable_Staff.generated.h"
 
+/***
+  퀵 슬롯 1개를 관리
+***/
 UCLASS()
 class UCPROJECT_API UCQuickConsumable_Staff : public UObject
 {
@@ -28,12 +31,12 @@ private:
 
 public:
 	// 보이기용, 소비 중이면 소비 이 후에 Consumable 교체
-	FORCEINLINE class UCInventoryItem_Consumable* GetItem() { return Item; }
+	FORCEINLINE class UCInventoryItem_Consumable* GetItem() { return InputItem; }
 	FORCEINLINE class ACConsumableActor* GetItemActor() { return Consumable; }
 
 private:
 	bool bConsuming = false;
-	class UCInventoryItem_Consumable* Item;
+	class UCInventoryItem_Consumable* InputItem;
 	class ACConsumableActor* Consumable;
 
 private:

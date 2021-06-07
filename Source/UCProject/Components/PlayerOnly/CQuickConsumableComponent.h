@@ -36,12 +36,15 @@ public:
 	class UCInventoryItem_Consumable* GetItemQuick4();
 
 private:
-	void OnQuick(class UCQuickConsumable_Staff* InQuick);
 	void SetNullItemQuick(class UCQuickConsumable_Staff* InQuick);
 	void SetItemQuick(class UCQuickConsumable_Staff* InQuick, class UCInventoryItem_Consumable* InConsumable);
 
+	void StartComsum(class ACConsumableActor* InConsumable);
+	UFUNCTION()
+		void End_Comsum();
+
 public:
-	FORCEINLINE class UCQuickConsumable_Staff* GetCurrConsum() { return CurrQuickSlot; }
+	FORCEINLINE class ACConsumableActor* GetCurrConsumActor() { return CurrQuickActor; }
 
 private:
 	UPROPERTY()
@@ -53,6 +56,6 @@ private:
 	UPROPERTY()
 		class UCQuickConsumable_Staff* QuickSlot4;
 
-	class UCQuickConsumable_Staff* CurrQuickSlot;
+	class ACConsumableActor* CurrQuickActor;
 
 };

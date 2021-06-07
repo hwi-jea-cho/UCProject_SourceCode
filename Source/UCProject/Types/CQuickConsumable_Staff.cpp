@@ -11,6 +11,7 @@ void UCQuickConsumable_Staff::SetOwner(AActor* InOwnerActor)
 	Menu = CHelpers::GetComponent<UCMenuComponent>(InOwnerActor);
 }
 
+// 사용아이템 교체 (준비)
 void UCQuickConsumable_Staff::SetConsumable(UCInventoryItem_Consumable* InItem)
 {
 	if (InItem == nullptr)
@@ -19,13 +20,14 @@ void UCQuickConsumable_Staff::SetConsumable(UCInventoryItem_Consumable* InItem)
 		return;
 	}
 
-	if (InItem->IsConsumable() == false)
+	if (InItem->IsEmpty())
 	{
 		return;
 	}
 
-	Item = InItem;
+	InputItem = InItem;
 	Menu->UpdateQuickSlots();
+	InputItem->OnStockChanged.AddDynamic(this, &UCQuickConsumable_Staff::OnStockChanged);
 
 	UpdateConsumActor();
 
@@ -33,7 +35,10 @@ void UCQuickConsumable_Staff::SetConsumable(UCInventoryItem_Consumable* InItem)
 
 void UCQuickConsumable_Staff::SetNullConsumable()
 {
-	Item = nullptr;
+	if (!!InputItem)
+		InputItem->OnStockChanged.RemoveDynamic(this, &UCQuickConsumable_Staff::OnStockChanged);
+
+	InputItem = nullptr;
 	Menu->UpdateQuickSlots();
 
 	UpdateConsumActor();
@@ -58,20 +63,21 @@ void UCQuickConsumable_Staff::UpdateConsumActor()
 
 	if (!!Consumable)
 	{
-		CheckTrue(Item == Consumable->GetItem());
+		CheckTrue(InputItem == Consumable->GetItem());
+
+		// 사용아이템 교체를 위해 기존 사용아이템 삭제
 		Consumable->End_Consum.RemoveDynamic(this, &UCQuickConsumable_Staff::End_Consum);
 		Consumable->Begin_Consum.RemoveDynamic(this, &UCQuickConsumable_Staff::Begin_Consum);
-		Consumable->GetItem()->OnStockChanged.RemoveDynamic(this, &UCQuickConsumable_Staff::OnStockChanged);
 		Consumable->Destroy();
 	}
 
-	if (Item == nullptr)
+	if (InputItem == nullptr)
 	{
 		Consumable = nullptr;
 		return;
 	}
 
-	const FConsumableDesc* desc = Item->GetConsumableDesc();
+	const FConsumableDesc* desc = InputItem->GetConsumableDesc();
 	TSubclassOf<ACConsumableActor> consumableClass = desc->ConsumableClass;
 	if (!!consumableClass == false)
 	{
@@ -81,11 +87,10 @@ void UCQuickConsumable_Staff::UpdateConsumActor()
 	FTransform transform;
 	ACConsumableActor* consumable =
 		OwnerActor->GetWorld()->SpawnActorDeferred<ACConsumableActor>(consumableClass, transform, OwnerActor);
-	consumable->SetData(Item, desc);
+	consumable->SetData(InputItem, desc);
 	UGameplayStatics::FinishSpawningActor(consumable, transform);
 	
 	Consumable = consumable;
-	Consumable->GetItem()->OnStockChanged.AddDynamic(this, &UCQuickConsumable_Staff::OnStockChanged);
 	Consumable->Begin_Consum.AddDynamic(this, &UCQuickConsumable_Staff::Begin_Consum);
 	Consumable->End_Consum.AddDynamic(this, &UCQuickConsumable_Staff::End_Consum);
 

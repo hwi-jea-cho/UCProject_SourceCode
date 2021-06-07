@@ -93,6 +93,13 @@ private:
 	void OnWeakAttack();
 	void OnStrongAttack();
 	void OnOpenMenu();
+	void OnTargeting();
+	void OnTargetLeft();
+	void OnTargetRight();
+	void OnQuick1();
+	void OnQuick2();
+	void OnQuick3();
+	void OnQuick4();
 
 private:
 	void Begin_Roll();

@@ -7,7 +7,7 @@
 #include "Components/Character/CStateComponent.h"
 #include "CConsumableActor.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FComsumState);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FActionComsum);
 
 UCLASS()
 class UCPROJECT_API ACConsumableActor : public AActor
@@ -36,13 +36,13 @@ public:
 
 public:
 	UPROPERTY(BlueprintAssignable)
-		FComsumState Begin_Consum;
+		FActionComsum Begin_Consum;
 
 	UPROPERTY(BlueprintAssignable)
-		FComsumState OnConsum;
+		FActionComsum OnConsum;
 
 	UPROPERTY(BlueprintAssignable)
-		FComsumState End_Consum;
+		FActionComsum End_Consum;
 
 private:
 	const FConsumableDesc* Desc;

@@ -126,13 +126,13 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("WeakAttack", EInputEvent::IE_Pressed, this, &ACPlayer::OnWeakAttack);
 	PlayerInputComponent->BindAction("StrongAttack", EInputEvent::IE_Pressed, this, &ACPlayer::OnStrongAttack);
 	PlayerInputComponent->BindAction("OpenMenu", EInputEvent::IE_Pressed, this, &ACPlayer::OnOpenMenu);
-	PlayerInputComponent->BindAction("Targeting", EInputEvent::IE_Pressed, Targeting, &UCTargetingComponent::ToggleLookOn);
-	PlayerInputComponent->BindAction("TargetLeft", EInputEvent::IE_Pressed, Targeting, &UCTargetingComponent::LookOnLeft);
-	PlayerInputComponent->BindAction("TargetRight", EInputEvent::IE_Pressed, Targeting, &UCTargetingComponent::LookOnRight);
-	PlayerInputComponent->BindAction("Quick1", EInputEvent::IE_Pressed, QuickConsumable, &UCQuickConsumableComponent::OnQuick1);
-	PlayerInputComponent->BindAction("Quick2", EInputEvent::IE_Pressed, QuickConsumable, &UCQuickConsumableComponent::OnQuick2);
-	PlayerInputComponent->BindAction("Quick3", EInputEvent::IE_Pressed, QuickConsumable, &UCQuickConsumableComponent::OnQuick3);
-	PlayerInputComponent->BindAction("Quick4", EInputEvent::IE_Pressed, QuickConsumable, &UCQuickConsumableComponent::OnQuick4);
+	PlayerInputComponent->BindAction("Targeting", EInputEvent::IE_Pressed, this, &ACPlayer::OnTargeting);
+	PlayerInputComponent->BindAction("TargetLeft", EInputEvent::IE_Pressed, this, &ACPlayer::OnTargetLeft);
+	PlayerInputComponent->BindAction("TargetRight", EInputEvent::IE_Pressed, this, &ACPlayer::OnTargetRight);
+	PlayerInputComponent->BindAction("Quick1", EInputEvent::IE_Pressed, this, &ACPlayer::OnQuick1);
+	PlayerInputComponent->BindAction("Quick2", EInputEvent::IE_Pressed, this, &ACPlayer::OnQuick2);
+	PlayerInputComponent->BindAction("Quick3", EInputEvent::IE_Pressed, this, &ACPlayer::OnQuick3);
+	PlayerInputComponent->BindAction("Quick4", EInputEvent::IE_Pressed, this, &ACPlayer::OnQuick4);
 
 }
 
@@ -282,6 +282,41 @@ void ACPlayer::OnStrongAttack()
 void ACPlayer::OnOpenMenu()
 {
 	Menu->OpenMenu();
+}
+
+void ACPlayer::OnTargeting()
+{
+	Targeting->ToggleLookOn();
+}
+
+void ACPlayer::OnTargetLeft()
+{
+	Targeting->LookOnLeft();
+}
+
+void ACPlayer::OnTargetRight()
+{
+	Targeting->LookOnRight();
+}
+
+void ACPlayer::OnQuick1()
+{
+	QuickConsumable->OnQuick1();
+}
+
+void ACPlayer::OnQuick2()
+{
+	QuickConsumable->OnQuick2();
+}
+
+void ACPlayer::OnQuick3()
+{
+	QuickConsumable->OnQuick3();
+}
+
+void ACPlayer::OnQuick4()
+{
+	QuickConsumable->OnQuick4();
 }
 
 

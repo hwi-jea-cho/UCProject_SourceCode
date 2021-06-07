@@ -1,6 +1,5 @@
 #include "CAnimNotify_EndConsum.h"
 #include "Global.h"
-#include "Types/CQuickConsumable_Staff.h"
 #include "Components/PlayerOnly/CQuickConsumableComponent.h"
 #include "Actors/CConsumableActor.h"
 
@@ -22,11 +21,7 @@ void UCAnimNotify_EndConsum::Notify(USkeletalMeshComponent* MeshComp, UAnimSeque
 		CHelpers::GetComponent<UCQuickConsumableComponent>(MeshComp->GetOwner());
 	CheckNull(quickConsumable);
 
-	UCQuickConsumable_Staff* staff = quickConsumable->GetCurrConsum();
-
-	CheckNull(staff);
-
-	ACConsumableActor* actor = staff->GetItemActor();
+	ACConsumableActor* actor = quickConsumable->GetCurrConsumActor();
 
 	CheckNull(actor);
 

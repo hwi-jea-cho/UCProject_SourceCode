@@ -3,4 +3,4 @@
 
 실행파일 폴더 : Builds
 소스코드 폴더 : Source
-솔루션 파일 : UCProject.sln
+솔루션 파일(Visual Studio 2019) : UCProject.sln
