@@ -25,11 +25,18 @@ void UCStanceComponent::SetOneHandMode()
 	ChangeType(EStanceType::OneHand);
 }
 
+void UCStanceComponent::SetHeadRotation(const FRotator& InRotator)
+{
+	if (OnChangedHeadRotation.IsBound())
+		OnChangedHeadRotation.Broadcast(InRotator);
+}
+
+
 void UCStanceComponent::ChangeType(EStanceType InNewType)
 {
 	EStanceType prevType = Curr;
 	Curr = InNewType;
 
-	if (OnStanceChanged.IsBound())
-		OnStanceChanged.Broadcast(prevType, InNewType);
+	if (OnChangedStance.IsBound())
+		OnChangedStance.Broadcast(prevType, InNewType);
 }

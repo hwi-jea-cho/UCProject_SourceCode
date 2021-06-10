@@ -1,6 +1,6 @@
 #include "CAnimNotify_Rolled.h"
 #include "Global.h"
-#include "Components/PlayerOnly/CPlayerMovementComponent.h"
+#include "Components/Character/CStateComponent.h"
 
 FString UCAnimNotify_Rolled::GetNotifyName_Implementation() const
 {
@@ -13,10 +13,10 @@ void UCAnimNotify_Rolled::Notify(USkeletalMeshComponent* MeshComp, UAnimSequence
 	CheckNull(MeshComp);
 	CheckNull(MeshComp->GetOwner());
 
-	UCPlayerMovementComponent* movement =
-		CHelpers::GetComponent<UCPlayerMovementComponent>(MeshComp->GetOwner());
-	CheckNull(movement);
+	UCStateComponent* state = 
+		CHelpers::GetComponent<UCStateComponent>(MeshComp->GetOwner());
+	CheckNull(state);
 
-	movement->End_Roll();
+	state->SetIdleMode();
 
 }

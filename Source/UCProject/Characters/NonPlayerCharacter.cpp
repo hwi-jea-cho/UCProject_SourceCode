@@ -2,6 +2,7 @@
 #include "Global.h"
 #include "Components/Actor/CInteractorComponent.h"
 #include "Components/Actor/CTalkableComponent.h"
+#include "Components/Character/CStanceComponent.h"
 #include "Components/Character/CNpcPoseComponent.h"
 #include "Components/PlayerOnly/CLiteracyComponent.h"
 #include "Characters/CPlayer.h"
@@ -10,12 +11,14 @@ ANonPlayerCharacter::ANonPlayerCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	CHelpers::CreateActorComponent(this, &Pose, "Pose");
-	CHelpers::CreateActorComponent(this, &State, "State");
 	CHelpers::CreateActorComponent(this, &Interactor, "Interactor");
 	CHelpers::CreateActorComponent(this, &Talkable, "Talkable");
+	CHelpers::CreateActorComponent(this, &State, "State");
+	CHelpers::CreateActorComponent(this, &Stance, "Stance");
+	CHelpers::CreateActorComponent(this, &Pose, "Pose");
 
 	Interactor->SetInteractorType(EInteractorType::NPC);
+
 }
 
 void ANonPlayerCharacter::BeginPlay()
@@ -28,6 +31,14 @@ void ANonPlayerCharacter::BeginPlay()
 	Talkable->OnEnd_Talk.AddDynamic(this, &ANonPlayerCharacter::OnEnd_Talk);
 
 }
+
+void ANonPlayerCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	ChangeHeadRotation();
+}
+
 
 void ANonPlayerCharacter::Interaction(UCInteractorComponent* InOther)
 {
@@ -55,7 +66,7 @@ void ANonPlayerCharacter::OnInteractorConnected(UCInteractorComponent* InOther)
 	ACPlayer* player = Cast<ACPlayer>(InOther->GetOwner());
 
 	if (!!player)
-		Pose->SetLookingAtActor(player);
+		SetWatchingActor(player);
 }
 
 void ANonPlayerCharacter::OffInteractorConnected(UCInteractorComponent* InOther)
@@ -63,10 +74,31 @@ void ANonPlayerCharacter::OffInteractorConnected(UCInteractorComponent* InOther)
 	ACPlayer* player = Cast<ACPlayer>(InOther->GetOwner());
 
 	if (!!player)
-		Pose->SetLookingAtActor(nullptr);
+		SetWatchingActor(nullptr);
 }
 
 void ANonPlayerCharacter::OnEnd_Talk(FName InCurrMentID)
 {
 	State->SetIdleMode();
+}
+
+
+void ANonPlayerCharacter::SetWatchingActor(AActor* InActor)
+{
+	WatchingActor = InActor;
+
+	if (InActor == nullptr)
+		Stance->SetHeadRotation(FRotator());
+}
+
+void ANonPlayerCharacter::ChangeHeadRotation()
+{
+	CheckNull(WatchingActor);
+
+	FVector src = GetOwner()->GetActorRotation().Vector();
+	FVector dest = WatchingActor->GetActorLocation() - GetOwner()->GetActorLocation();
+
+	FRotator result = (dest.ToOrientationRotator() - src.ToOrientationRotator()).Clamp();
+
+	Stance->SetHeadRotation(result);
 }

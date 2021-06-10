@@ -105,7 +105,7 @@ void UCStatusInstance::AddChild(UCStatusInstance* InChild)
 	// 루프로 연결 되는 것을 방지하기 위해 ('A - B - C - A' 이런 형태가 되면 무한 루프가 된다)
 	for (auto p = this; p != nullptr; p = p->Parent)
 	{
-		// 새 부모의 부모가 자기 자신이라면 그 부모의 부모를 옛 부모로 만든다. 
+		// (A - B - C) 에서 B를 C 밑으로 부모를 넣는 다면 (A - C - B)로 만든다.
 		if (p->Parent == InChild)
 		{
 			p->SetParent(oldParent);

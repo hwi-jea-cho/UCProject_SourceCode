@@ -21,7 +21,7 @@ void UCAnimNotify_EndConsum::Notify(USkeletalMeshComponent* MeshComp, UAnimSeque
 		CHelpers::GetComponent<UCQuickConsumableComponent>(MeshComp->GetOwner());
 	CheckNull(quickConsumable);
 
-	ACConsumableActor* actor = quickConsumable->GetCurrConsumActor();
+	ACConsumableActor* actor = quickConsumable->GetCurrActor();
 
 	CheckNull(actor);
 

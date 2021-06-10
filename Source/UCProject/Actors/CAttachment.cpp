@@ -48,7 +48,7 @@ void ACAttachment::Equip_Implementation()
 {
 	const FMontageDesc& montageDesc = Data.EquipmentMontage;
 	if (!!montageDesc.AnimMontage)
-		OwnerCharacter->PlayAnimMontage(montageDesc.AnimMontage, montageDesc.PlayRatio, montageDesc.StartSction);
+		OwnerCharacter->PlayAnimMontage(montageDesc.AnimMontage, montageDesc.PlayRatio, montageDesc.StartSection);
 	else
 	{
 		Begin_Equip();
@@ -78,7 +78,7 @@ void ACAttachment::Unequip_Implementation()
 {
 	const FMontageDesc& montageDesc = Data.UnequipmentMontage;
 	if (!!montageDesc.AnimMontage)
-		OwnerCharacter->PlayAnimMontage(montageDesc.AnimMontage, montageDesc.PlayRatio, montageDesc.StartSction);
+		OwnerCharacter->PlayAnimMontage(montageDesc.AnimMontage, montageDesc.PlayRatio, montageDesc.StartSection);
 	else
 	{
 		Begin_Unequip();

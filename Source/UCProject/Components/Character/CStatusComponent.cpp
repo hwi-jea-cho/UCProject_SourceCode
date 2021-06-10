@@ -4,6 +4,11 @@ UCStatusComponent::UCStatusComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 
+	// -- FStatusData -- //
+	Status.MoveSpeed = 100;
+	Status.Hp = 100;
+	Status.Attack = 10;
+	Status.Armor = 1;
 }
 
 void UCStatusComponent::BeginPlay()

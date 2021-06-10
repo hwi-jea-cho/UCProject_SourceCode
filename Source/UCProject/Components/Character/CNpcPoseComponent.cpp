@@ -1,5 +1,7 @@
 #include "CNpcPoseComponent.h"
 #include "Global.h"
+#include "GameFramework/Character.h"
+
 
 UCNpcPoseComponent::UCNpcPoseComponent()
 {
@@ -7,42 +9,37 @@ UCNpcPoseComponent::UCNpcPoseComponent()
 
 }
 
-
 void UCNpcPoseComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	ACharacter* ownerCharacter = Cast<ACharacter>(GetOwner());
+	if (!!ownerCharacter)
+	{
+		OwnerMesh = ownerCharacter->GetMesh();
+
+	}
+
+	SetPose(StartPoseName);
 }
 
-void UCNpcPoseComponent::SetLookingAtActor(AActor* InActor)
+
+void UCNpcPoseComponent::SetPose(FName InNewPose)
 {
-	LookingAtActor = InActor;
+	CheckNull(OwnerMesh);
+	CheckNull(PoseTable);
+
+	const FNpcPoseDesc* poseDesc = nullptr;
+
+	FString contextString;
+	poseDesc = PoseTable->FindRow<FNpcPoseDesc>(InNewPose, contextString);
+
+	CheckNull(poseDesc);
+	CheckNull(poseDesc->AnimClass);
+
+	OwnerMesh->SetAnimInstanceClass(poseDesc->AnimClass);
+
 }
 
-void UCNpcPoseComponent::UpdatePose()
-{
-	ChangePose(CurrPose);
-}
 
-void UCNpcPoseComponent::ChangePose(ENpcPoseType InNewPose)
-{
-	ENpcPoseType prevPose = CurrPose;
-	CurrPose = InNewPose;
-
-	if (OnPoseChanged.IsBound())
-		OnPoseChanged.Broadcast(prevPose, InNewPose);
-}
-
-FRotator UCNpcPoseComponent::GetLookingAtRotation() const
-{
-	FRotator result = FRotator();
-	CheckNullResult(LookingAtActor, result);
-
-	FVector src = GetOwner()->GetActorRotation().Vector();
-	FVector dest = LookingAtActor->GetActorLocation() - GetOwner()->GetActorLocation();
-
-	result = (dest.ToOrientationRotator() - src.ToOrientationRotator()).Clamp();
-
-	return result;
-}
 

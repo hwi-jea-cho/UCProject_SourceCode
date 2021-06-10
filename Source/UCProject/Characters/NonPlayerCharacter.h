@@ -14,14 +14,17 @@ protected: // Actor Component
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		class UCInteractorComponent* Interactor;
 
-	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
-		class UCNpcPoseComponent* Pose;
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCTalkableComponent* Talkable;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCStateComponent* State;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		class UCTalkableComponent* Talkable;
+		class UCStanceComponent* Stance;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCNpcPoseComponent* Pose;
 
 
 public:
@@ -29,6 +32,9 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+
+public:
+	virtual void Tick(float DeltaTime) override;
 
 private:
 	UFUNCTION()
@@ -42,5 +48,12 @@ private:
 
 	UFUNCTION()
 		void OnEnd_Talk(FName InCurrMentID);
+
+private:
+	void SetWatchingActor(AActor* InActor);
+	void ChangeHeadRotation();
+
+private:
+	AActor* WatchingActor;
 
 };

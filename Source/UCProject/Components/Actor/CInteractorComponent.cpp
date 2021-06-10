@@ -132,8 +132,8 @@ FText UCInteractorComponent::ConvertIdToName(FName InId) const
 
 	const FInteractorDesc* desc = nullptr;
 
-	FString ContextString;
-	desc = InteractorTable->FindRow<FInteractorDesc>(InId, ContextString);
+	FString contextString;
+	desc = InteractorTable->FindRow<FInteractorDesc>(InId, contextString);
 
 	if (desc == nullptr)
 		return result;

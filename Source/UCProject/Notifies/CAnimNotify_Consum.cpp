@@ -20,7 +20,7 @@ void UCAnimNotify_Consum::Notify(USkeletalMeshComponent* MeshComp, UAnimSequence
 		CHelpers::GetComponent<UCQuickConsumableComponent>(MeshComp->GetOwner());
 	CheckNull(quickConsumable);
 
-	ACConsumableActor* actor = quickConsumable->GetCurrConsumActor();
+	ACConsumableActor* actor = quickConsumable->GetCurrActor();
 
 	CheckNull(actor);
 

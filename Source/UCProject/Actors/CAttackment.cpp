@@ -84,7 +84,7 @@ void ACAttackment::Attack_Implementation()
 	}
 
 	if (!!Data.AnimMontage)
-		OwnerCharacter->PlayAnimMontage(Data.AnimMontage, Data.PlayRatio, Data.StartSction);
+		OwnerCharacter->PlayAnimMontage(Data.AnimMontage, Data.PlayRatio, Data.StartSection);
 	else
 	{
 		OnAttacked();

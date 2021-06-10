@@ -22,51 +22,46 @@ private:
 
 private: // Actor Component
 	UPROPERTY(VisibleDefaultsOnly)
-		class UCStatusComponent* Status;
-
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCOptionComponent* Option;
+		class UCInteractorComponent* Interactor;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCStateComponent* State;
 
 	UPROPERTY(VisibleDefaultsOnly)
+		class UCMotionComponent* Motion;
+
+	UPROPERTY(VisibleDefaultsOnly)
 		class UCStanceComponent* Stance;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		class UCPlayerMovementComponent* Movement;
+		class UCStatusComponent* Status;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		class UCTargetingComponent* Targeting;
-
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCCommendComponent* Commend;
-
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCLiteracyComponent* Literacy;
+		class UCMoveSpeedComponent* MoveSpeed;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCEquipmentComponent* Equipment;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		class UCInventoryComponent* Inventory;
-
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCInteractorComponent* Interactor;
-
-	UPROPERTY(VisibleDefaultsOnly)
 		class UCQuickConsumableComponent* QuickConsumable;
 
 	UPROPERTY(VisibleDefaultsOnly)
+		class UCInventoryComponent* Inventory;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCTargetingComponent* Targeting;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCLiteracyComponent* Literacy;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCCommendComponent* Commend;
+
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCOptionComponent* Option;
+
+	UPROPERTY(VisibleDefaultsOnly)
 		class UCMenuComponent* Menu;
-
-
-private:
-	UPROPERTY(EditAnywhere)
-		class USoundBase* JumpVoice;
-
-	UPROPERTY(EditAnywhere)
-		FStatusData StatusCharacter;
 
 public:
 	ACPlayer();
@@ -102,10 +97,14 @@ private:
 	void OnQuick4();
 
 private:
+	void Begin_Idle();
 	void Begin_Roll();
 	void Begin_Attack();
 	void Begin_Take();
 	void End_Take();
+	void End_Talk();
+	void End_Consum();
+	void Interact();
 
 private:
 	UFUNCTION()

@@ -2,6 +2,7 @@
 #include "Global.h"
 #include "Types/CInventoryItem_Consumable.h"
 #include "Types/CQuickConsumable_Staff.h"
+#include "Components/Character/CStateComponent.h"
 #include "Actors/CConsumableActor.h"
 
 UCQuickConsumableComponent::UCQuickConsumableComponent()
@@ -13,6 +14,8 @@ UCQuickConsumableComponent::UCQuickConsumableComponent()
 void UCQuickConsumableComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	State = CHelpers::GetComponent<UCStateComponent>(GetOwner());
 
 	QuickSlot1 = NewObject<UCQuickConsumable_Staff>();
 	QuickSlot2 = NewObject<UCQuickConsumable_Staff>();
@@ -28,22 +31,22 @@ void UCQuickConsumableComponent::BeginPlay()
 
 void UCQuickConsumableComponent::OnQuick1()
 {
-	StartComsum(QuickSlot1->GetItemActor());
+	StartConsum_Staff(QuickSlot1);
 }
 
 void UCQuickConsumableComponent::OnQuick2()
 {
-	StartComsum(QuickSlot2->GetItemActor());
+	StartConsum_Staff(QuickSlot2);
 }
 
 void UCQuickConsumableComponent::OnQuick3()
 {
-	StartComsum(QuickSlot3->GetItemActor());
+	StartConsum_Staff(QuickSlot3);
 }
 
 void UCQuickConsumableComponent::OnQuick4()
 {
-	StartComsum(QuickSlot4->GetItemActor());
+	StartConsum_Staff(QuickSlot4);
 }
 
 void UCQuickConsumableComponent::SetNullItemQuick1()
@@ -107,6 +110,18 @@ UCInventoryItem_Consumable* UCQuickConsumableComponent::GetItemQuick4()
 }
 
 
+// ACConsumableActor
+void UCQuickConsumableComponent::SetCurrActor(ACConsumableActor* InConsumable)
+{
+	CurrQuickActor = InConsumable;
+}
+
+void UCQuickConsumableComponent::SetCurrActorNull()
+{
+	CurrQuickActor = nullptr;
+}
+
+
 void UCQuickConsumableComponent::SetNullItemQuick(UCQuickConsumable_Staff* InQuick)
 {
 	InQuick->SetNullConsumable();
@@ -119,19 +134,9 @@ void UCQuickConsumableComponent::SetItemQuick(UCQuickConsumable_Staff* InQuick, 
 
 }
 
-void UCQuickConsumableComponent::StartComsum(ACConsumableActor* InConsumable)
+void UCQuickConsumableComponent::StartConsum_Staff(UCQuickConsumable_Staff* InStaff)
 {
-	CheckTrue(CurrQuickActor != nullptr);
-	CheckNull(InConsumable);
+	CheckNull(InStaff->GetItemActor());
 
-	CurrQuickActor = InConsumable;
-	InConsumable->End_Consum.AddDynamic(this, &UCQuickConsumableComponent::End_Comsum);
-	InConsumable->StartConsum();
-}
-
-// ACConsumableActor::End_Consum
-void UCQuickConsumableComponent::End_Comsum()
-{
-	CurrQuickActor->End_Consum.RemoveDynamic(this, &UCQuickConsumableComponent::End_Comsum);
-	CurrQuickActor = nullptr;
+	InStaff->GetItemActor()->StartConsum();
 }

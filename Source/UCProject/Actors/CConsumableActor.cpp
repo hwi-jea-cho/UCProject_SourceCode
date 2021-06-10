@@ -3,6 +3,8 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Types/CInventoryItem_Consumable.h"
+#include "Components/Character/CStateComponent.h"
+#include "Components/PlayerOnly/CQuickConsumableComponent.h"
 
 ACConsumableActor::ACConsumableActor()
 {
@@ -21,17 +23,19 @@ void ACConsumableActor::BeginPlay()
 	Super::BeginPlay();
 	
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
-	State = CHelpers::GetComponent<UCStateComponent>(OwnerCharacter);
+	OwnerState = CHelpers::GetComponent<UCStateComponent>(GetOwner());
+	OwnerComponent = CHelpers::GetComponent<UCQuickConsumableComponent>(GetOwner());
 }
 
 
 void ACConsumableActor::StartConsum()
 {
-	CheckFalse(State->IsCanConsum());
+	CheckFalse(OwnerState->IsCanConsum());
+	CheckTrue(OwnerComponent->GetCurrActor() != nullptr);
 
-	State->SetConsumMode();
-	State->SetStop();
-	State->OnStateTypeChanged.AddDynamic(this, &ACConsumableActor::OnStateTypeChanged);
+	OwnerComponent->SetCurrActor(this);
+	OwnerState->SetConsumMode();
+	OwnerState->SetStop();
 
 	if (Begin_Consum.IsBound())
 		Begin_Consum.Broadcast();
@@ -39,7 +43,7 @@ void ACConsumableActor::StartConsum()
 	const FMontageDesc& montageDesc = Desc->ConsumMontage;
 	if (!!montageDesc.AnimMontage)
 	{
-		OwnerCharacter->PlayAnimMontage(montageDesc.AnimMontage, montageDesc.PlayRatio, montageDesc.StartSction);
+		OwnerCharacter->PlayAnimMontage(montageDesc.AnimMontage, montageDesc.PlayRatio, montageDesc.StartSection);
 	}
 	else
 	{
@@ -56,24 +60,17 @@ void ACConsumableActor::Consum()
 		OnConsum.Broadcast();
 }
 
-void ACConsumableActor::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
-{
-	CheckTrue(InPrevType != EStateType::Consum);
-
-	FinishConsum();
-}
-
 void ACConsumableActor::FinishConsum()
 {
-	State->OnStateTypeChanged.RemoveDynamic(this, &ACConsumableActor::OnStateTypeChanged);
-
-	if (State->IsConsumMode())
+	if (OwnerState->IsConsumMode())
 	{
-		State->SetMove();
-		State->SetIdleMode();
+		OwnerState->SetMove();
+		OwnerState->SetIdleMode();
 	}
 
 	if (End_Consum.IsBound())
 		End_Consum.Broadcast();
+
+	OwnerComponent->SetCurrActorNull();
 }
 

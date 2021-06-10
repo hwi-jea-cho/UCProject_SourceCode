@@ -1,8 +1,8 @@
 #include "CThrowItem.h"
 #include "Global.h"
 #include "Particles/ParticleSystemComponent.h"
-#include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Components/SphereComponent.h"
 
 ACThrowItem::ACThrowItem()
 {

@@ -4,15 +4,16 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/Actor/CInteractorComponent.h"
+#include "Components/Character/CMotionComponent.h"
 #include "Components/Character/CStatusComponent.h"
 #include "Components/Character/CStanceComponent.h"
 #include "Components/Character/CEquipmentComponent.h"
+#include "Components/Character/CMoveSpeedComponent.h"
 #include "Components/PlayerOnly/COptionComponent.h"
 #include "Components/PlayerOnly/CCommendComponent.h"
 #include "Components/PlayerOnly/CLiteracyComponent.h"
 #include "Components/PlayerOnly/CTargetingComponent.h"
 #include "Components/PlayerOnly/CInventoryComponent.h"
-#include "Components/PlayerOnly/CPlayerMovementComponent.h"
 #include "Components/PlayerOnly/CQuickConsumableComponent.h"
 #include "Components/PlayerOnly/CMenuComponent.h"
 
@@ -24,24 +25,20 @@ ACPlayer::ACPlayer()
 
 
 	// -- CreateComponent Actor -- //
-	CHelpers::CreateActorComponent(this, &State, "State");
-	CHelpers::CreateActorComponent(this, &Status, "Status");
-	CHelpers::CreateActorComponent(this, &Option, "Option");
-	CHelpers::CreateActorComponent(this, &Stance, "Stance");
-	CHelpers::CreateActorComponent(this, &Commend, "Commend");
-	CHelpers::CreateActorComponent(this, &Literacy, "Literacy");
-	CHelpers::CreateActorComponent(this, &Movement, "Movement");
-	CHelpers::CreateActorComponent(this, &Targeting, "Targeting");
-	CHelpers::CreateActorComponent(this, &Equipment, "Equipment");
-	CHelpers::CreateActorComponent(this, &Inventory, "Inventory");
 	CHelpers::CreateActorComponent(this, &Interactor, "Interactor");
+	CHelpers::CreateActorComponent(this, &State, "State");
+	CHelpers::CreateActorComponent(this, &Motion, "Motion");
+	CHelpers::CreateActorComponent(this, &Stance, "Stance");
+	CHelpers::CreateActorComponent(this, &Status, "Status");
+	CHelpers::CreateActorComponent(this, &MoveSpeed, "MoveSpeed");
+	CHelpers::CreateActorComponent(this, &Equipment, "Equipment");
 	CHelpers::CreateActorComponent(this, &QuickConsumable, "QuickConsumable");
+	CHelpers::CreateActorComponent(this, &Inventory, "Inventory");
+	CHelpers::CreateActorComponent(this, &Targeting, "Targeting");
+	CHelpers::CreateActorComponent(this, &Literacy, "Literacy");
+	CHelpers::CreateActorComponent(this, &Commend, "Commend");
+	CHelpers::CreateActorComponent(this, &Option, "Option");
 	CHelpers::CreateActorComponent(this, &Menu, "Menu");
-
-
-	// -- Property -- //
-	CHelpers::GetAsset<USoundBase>(&JumpVoice,
-		"SoundCue'/Game/_MyWorld/Art/Audio/JumpVoices/Jump_Voice_Cue.Jump_Voice_Cue'");
 
 
 	// -- Character -- //
@@ -82,13 +79,6 @@ ACPlayer::ACPlayer()
 	SpringArm->bEnableCameraLag = true;
 
 
-	// -- FStatusData -- //
-	StatusCharacter.MoveSpeed = 100;
-	StatusCharacter.Hp = 100;
-	StatusCharacter.Attack = 10;
-	StatusCharacter.Armor = 1;
-
-
 	// -- Interactor -- //
 	Interactor->SetInteractorType(EInteractorType::Player);
 	Interactor->ConnectingTypes = 0;
@@ -99,12 +89,10 @@ void ACPlayer::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Movement->SetMoveSpeed(StatusCharacter.MoveSpeed);
-	Status->SetLocalStatus(StatusCharacter);
-
 	State->OnStateTypeChanged.AddDynamic(this, &ACPlayer::OnStateTypeChanged);
 	Status->OnStatusChanged.AddDynamic(this, &ACPlayer::StatusChanged);
 	Inventory->SetCharacterStatus(Status->GetLocalStatus());
+	MoveSpeed->SetMoveSpeed(Status->GetMoveSpeed());
 }
 
 void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -135,7 +123,6 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("Quick4", EInputEvent::IE_Pressed, this, &ACPlayer::OnQuick4);
 
 }
-
 
 
 // [Axis] MoveForward
@@ -190,7 +177,6 @@ void ACPlayer::OnLookUpRate(float InAxis)
 void ACPlayer::OnZoom(float InAxis)
 {
 	SpringArm->TargetArmLength += (10.0f * InAxis);
-	//SpringArm->TargetArmLength = FMath::Clamp(SpringArm->TargetArmLength, ZoomRange.X, ZoomRange.Y);
 }
 
 // [IE_Pressed] Rolling
@@ -205,12 +191,7 @@ void ACPlayer::OnJumping()
 	CheckFalse(State->IsIdleMode());
 
 	if (GetCharacterMovement()->IsFalling() == false)
-	{
-		UGameplayStatics::SpawnSoundAtLocation(
-			GetWorld(), JumpVoice, GetActorLocation()
-		);
-	}
-	Jump();
+		Motion->PlayJump();
 }
 
 // [IE_Released] Jumping
@@ -222,7 +203,7 @@ void ACPlayer::OffJumping()
 // [IE_Pressed] ToggleRun
 void ACPlayer::OnToggleRun()
 {
-	Movement->ToggleRunMode();
+	MoveSpeed->ToggleRunMode();
 }
 
 // [IE_Pressed] WeakAttack
@@ -234,42 +215,22 @@ void ACPlayer::OnWeakAttack()
 		return;
 	}
 
-	if (State->IsIdleMode() && !GetCharacterMovement()->IsFalling())
+	if (State->IsAttackMode())
 	{
-		UCInteractorComponent* target = Interactor->GetLastConnecting();
-		if (!!target)
-		{
-			switch (target->GetInteractorType())
-			{
-			case EInteractorType::Chest:
-				State->SetTakeMode();
-				break;
-			case EInteractorType::DropItem:
-				State->SetTakeMode();
-				break;
-			case EInteractorType::NPC:
-			{
-				FRotator newRotator = UKismetMathLibrary::FindLookAtRotation(
-					GetActorLocation(), target->GetOwner()->GetActorLocation()
-				);
-
-				FRotator rotator = GetActorRotation();
-				newRotator.Pitch = rotator.Pitch;
-				newRotator.Roll = rotator.Roll;
-				SetActorRotation(newRotator);
-				target->Interact(Interactor);
-				break;
-			}
-			default:
-				target->Interact(Interactor);
-				break;
-			}
-
-			return;
-		}
+		Commend->WeakAttack();
+		return;
 	}
 
-	Commend->WeakAttack();
+	if (State->IsIdleMode())
+	{
+		Interact();
+
+		if (State->IsIdleMode())
+			Commend->WeakAttack();
+
+		return;
+	}
+
 }
 
 // [IE_Pressed] StrongAttack
@@ -284,46 +245,63 @@ void ACPlayer::OnOpenMenu()
 	Menu->OpenMenu();
 }
 
+// [IE_Pressed] Targeting
 void ACPlayer::OnTargeting()
 {
 	Targeting->ToggleLookOn();
 }
 
+// [IE_Pressed] TargetLeft
 void ACPlayer::OnTargetLeft()
 {
 	Targeting->LookOnLeft();
 }
 
+// [IE_Pressed] TargetRight
 void ACPlayer::OnTargetRight()
 {
 	Targeting->LookOnRight();
 }
 
+// [IE_Pressed] Quick1
 void ACPlayer::OnQuick1()
 {
+	CheckFalse(State->IsCanConsum());
 	QuickConsumable->OnQuick1();
 }
 
+// [IE_Pressed] Quick2
 void ACPlayer::OnQuick2()
 {
+	CheckFalse(State->IsCanConsum());
 	QuickConsumable->OnQuick2();
 }
 
+// [IE_Pressed] Quick3
 void ACPlayer::OnQuick3()
 {
+	CheckFalse(State->IsCanConsum());
 	QuickConsumable->OnQuick3();
 }
 
+// [IE_Pressed] Quick4
 void ACPlayer::OnQuick4()
 {
+	CheckFalse(State->IsCanConsum());
 	QuickConsumable->OnQuick4();
 }
 
 
 // OnStateTypeChanged
+void ACPlayer::Begin_Idle()
+{
+	Equipment->ChangeWeapon();
+}
+
+// OnStateTypeChanged
 void ACPlayer::Begin_Roll()
 {
-	Movement->Begin_Roll(FVector2D(
+	Motion->PlayRoll(FVector2D(
 		InputComponent->GetAxisValue("MoveForward"),
 		InputComponent->GetAxisValue("MoveRight")
 	));
@@ -360,25 +338,79 @@ void ACPlayer::End_Take()
 	target->Interact(Interactor);
 }
 
-// StateComponent
+// OnStateTypeChanged
+void ACPlayer::End_Talk()
+{
+	Literacy->CancelTalk();
+}
+
+// OnStateTypeChanged
+void ACPlayer::End_Consum()
+{
+	QuickConsumable->SetCurrActorNull();
+}
+
+
+// OnWeakAttack
+void ACPlayer::Interact()
+{
+	if (GetCharacterMovement()->IsFalling() == false)
+	{
+		UCInteractorComponent* target = Interactor->GetLastConnecting();
+		if (!!target)
+		{
+			switch (target->GetInteractorType())
+			{
+			case EInteractorType::Chest:
+				State->SetTakeMode();
+				break;
+			case EInteractorType::DropItem:
+				State->SetTakeMode();
+				break;
+			case EInteractorType::NPC:
+			{
+				FRotator newRotator = UKismetMathLibrary::FindLookAtRotation(
+					GetActorLocation(), target->GetOwner()->GetActorLocation()
+				);
+
+				FRotator rotator = GetActorRotation();
+				newRotator.Pitch = rotator.Pitch;
+				newRotator.Roll = rotator.Roll;
+				SetActorRotation(newRotator);
+				target->Interact(Interactor);
+				break;
+			}
+			default:
+				target->Interact(Interactor);
+				break;
+			}
+		}
+	}
+
+	return;
+}
+
+
+// StateComponent -> OnStateTypeChanged
 void ACPlayer::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
 	switch (InPrevType)
 	{
-	case EStateType::Talk: Literacy->CancelTalk(); break;
+	case EStateType::Talk: End_Talk(); break;
+	case EStateType::Consum: End_Consum(); break;
 	}
 
 	switch (InNewType)
 	{
-	case EStateType::Idle: Equipment->ChangeWeapon(); break;
+	case EStateType::Idle: Begin_Idle(); break;
 	case EStateType::Roll: Begin_Roll(); break;
 	case EStateType::Attack: Begin_Attack(); break;
 	case EStateType::Take: Begin_Take(); break;
 	}
 }
 
-
+// StatusComponent -> OnStatusChanged
 void ACPlayer::StatusChanged(UCStatusInstance* InValue)
 {
-	Movement->SetMoveSpeed(InValue->GetMoveSpeed());
+	MoveSpeed->SetMoveSpeed(InValue->GetMoveSpeed());
 }

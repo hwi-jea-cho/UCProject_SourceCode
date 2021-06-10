@@ -16,6 +16,6 @@ public:
 		float PlayRatio = 1.0f;
 
 	UPROPERTY(EditAnywhere)
-		FName StartSction;
+		FName StartSection;
 
 };

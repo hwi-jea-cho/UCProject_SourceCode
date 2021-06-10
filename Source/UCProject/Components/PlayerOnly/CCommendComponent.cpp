@@ -58,7 +58,7 @@ void UCCommendComponent::BeginCombo()
 	InputCommend = EInputCommend::None;
 }
 
-// Notify
+// ACAttackment
 void UCCommendComponent::NextCombo()
 {
 	EAttackCommend curr = GetCurrCommend();

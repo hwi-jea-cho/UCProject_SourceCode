@@ -17,13 +17,6 @@ class UCPROJECT_API UCCommendComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-protected:
-	UPROPERTY(BlueprintReadOnly)
-		class UCEquipmentComponent* Equipment;
-
-	UPROPERTY(BlueprintReadOnly)
-		class UCStateComponent* State;
-
 
 public:	
 	UCCommendComponent();
@@ -45,7 +38,11 @@ private:
 
 private:
 	class ACharacter* OwnerCharacter;
-	class UCComboComponent* CurrCombo;
+	class UCEquipmentComponent* Equipment;
+	class UCStateComponent* State;
+
 	class ACAttachment* CurrWeapon;
+	class UCComboComponent* CurrCombo;
+
 	EInputCommend InputCommend;
 };

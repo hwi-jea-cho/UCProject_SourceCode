@@ -21,14 +21,34 @@ protected:
 		bool IsCrouching;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-		EStanceType StanceType;
+		float HeadHoz;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		float HeadVert;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		float HeadSpeed = 1080.0f;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		EStanceType StanceType;
+	
 public:
 	virtual void NativeBeginPlay() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 private:
-	UFUNCTION()
-		void StanceChanged(EStanceType InPrevType, EStanceType InNewType);
+	float AdjustmentAngle(float InMaxDelta, float InOldAngle, float InNewAngle);
 
+private:
+	UFUNCTION()
+		void OnChangedStance(EStanceType InPrevType, EStanceType InNewType);
+
+	UFUNCTION()
+		void OnChangedHeadRotation(FRotator InRotator);
+
+private:
+	float PrevHoz;
+	float PrevVert;
+	float TargetHoz;
+	float TargetVert;
 };

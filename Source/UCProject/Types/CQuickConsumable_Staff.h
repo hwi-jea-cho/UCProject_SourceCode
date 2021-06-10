@@ -30,7 +30,7 @@ private:
 		void OnStockChanged(class UCInventoryItem_Consumable* InConsumable, int32 InStock);
 
 public:
-	// 보이기용, 소비 중이면 소비 이 후에 Consumable 교체
+	// InputItem은 보이기용, 소비 중이면 소비 이 후에 Consumable 교체
 	FORCEINLINE class UCInventoryItem_Consumable* GetItem() { return InputItem; }
 	FORCEINLINE class ACConsumableActor* GetItemActor() { return Consumable; }
 

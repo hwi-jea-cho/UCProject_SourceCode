@@ -4,7 +4,6 @@
 #include "GameFramework/Actor.h"
 #include "Types/CStatusInstance.h"
 #include "TableDatas/ConsumableDesc.h"
-#include "Components/Character/CStateComponent.h"
 #include "CConsumableActor.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FActionComsum);
@@ -26,10 +25,6 @@ public:
 	void Consum();
 	void FinishConsum();
 
-private:
-	UFUNCTION()
-		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
-
 public:
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE class UCInventoryItem_Consumable* GetItem() { return Item; }
@@ -49,6 +44,7 @@ private:
 	class UCInventoryItem_Consumable* Item;
 	
 	class ACharacter* OwnerCharacter;
-	class UCStateComponent* State;
+	class UCStateComponent* OwnerState;
+	class UCQuickConsumableComponent* OwnerComponent;
 
 };

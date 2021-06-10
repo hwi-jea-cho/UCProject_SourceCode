@@ -2,50 +2,43 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Engine/DataTable.h"
 #include "CNpcPoseComponent.generated.h"
 
-
-UENUM(BlueprintType)
-enum class ENpcPoseType : uint8
+USTRUCT(BlueprintType)
+struct FNpcPoseDesc : public FTableRowBase
 {
-	Default, Pose1,
+	GENERATED_BODY()
+
+public:
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<UAnimInstance> AnimClass;
 };
 
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FPoseChanged, ENpcPoseType, InOldPose, ENpcPoseType, InNewPose);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UCPROJECT_API UCNpcPoseComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	UCNpcPoseComponent();
-
 private:
-	UPROPERTY(EditAnywhere)
-		ENpcPoseType CurrPose = ENpcPoseType::Default;
+	UPROPERTY(EditDefaultsOnly, Category = "DataTable")
+		UDataTable* PoseTable;
+
+	UPROPERTY(EditAnywhere, Category = "NpcPose")
+		FName StartPoseName;
+
+public:
+	UCNpcPoseComponent();
 
 protected:
 	virtual void BeginPlay() override;
 
 public:
-	void SetLookingAtActor(AActor* InActor);
 	UFUNCTION(BlueprintCallable)
-		void UpdatePose();
+		void SetPose(FName InNewPose);
 
 private:
-	void ChangePose(ENpcPoseType InNewPose);
-
-public:
-	FRotator GetLookingAtRotation() const;
-	FORCEINLINE ENpcPoseType GetPose() const { return CurrPose; }
-
-public:
-	UPROPERTY(BlueprintAssignable)
-		FPoseChanged OnPoseChanged;
-
-private:
-	AActor* LookingAtActor;
+	class USkeletalMeshComponent* OwnerMesh;
 
 };

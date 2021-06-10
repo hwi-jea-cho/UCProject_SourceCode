@@ -66,8 +66,8 @@ void UCLiteracyComponent::NextTalk()
 	const FNonPlayerMent* mentDesc = nullptr;
 
 	FName mentId = Contacted->GetCurrMentID();
-	FString ContextString;
-	MentTable->ForeachRow(ContextString, TFunctionRef<void(const FName&, const FNonPlayerMent&)>([&](const FName& InName, const FNonPlayerMent& InValue) {
+	FString contextString;
+	MentTable->ForeachRow(contextString, TFunctionRef<void(const FName&, const FNonPlayerMent&)>([&](const FName& InName, const FNonPlayerMent& InValue) {
 		if (InName == mentId)
 		{
 			mentDesc = &InValue;

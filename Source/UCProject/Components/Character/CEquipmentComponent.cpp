@@ -14,10 +14,10 @@ UCEquipmentComponent::UCEquipmentComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 
 	CHelpers::GetAsset(&DefaultWeaponData,
-		"CWeaponData'/Game/_MyWorld/Items/Equipment/Player/DA_Sword.DA_Sword'");
+		"CWeaponData'/Game/_MyWorld/DataAssets/Equipment/Player/Sword/DA_Sword.DA_Sword'");
 
 	CHelpers::GetAsset(&WeaponList,
-		"DataTable'/Game/_MyWorld/Items/Equipment/Player/FPlayerWeaponList.FPlayerWeaponList'");
+		"DataTable'/Game/_MyWorld/DataTables/Player/FPlayerWeaponList.FPlayerWeaponList'");
 
 }
 
@@ -115,10 +115,10 @@ void UCEquipmentComponent::ChangeWeapon()
 	if (!!EquipedWeapon)
 		EquipedWeapon->Destroy();
 
-	FString ContextString;
+	FString contextString;
 	FWeaponDesc* weaponDesc = nullptr;
 	if (!!NextWeapon)
-		weaponDesc = WeaponList->FindRow<FWeaponDesc>(NextWeapon->GetItemID(), ContextString);
+		weaponDesc = WeaponList->FindRow<FWeaponDesc>(NextWeapon->GetItemID(), contextString);
 
 	Weapon = NextWeapon;
 	NextWeapon = nullptr;

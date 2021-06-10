@@ -7,7 +7,7 @@
 UENUM(BlueprintType)
 enum class EStateType : uint8
 {
-	Idle, Roll, Attack, Take, Consum, Talk
+	Idle, Dead, Hitted, Attack, Roll, Talk, Take, Consum, Max
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FStateTypeChanged, EStateType, InPrevType, EStateType, InNewType);
@@ -16,6 +16,26 @@ UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UCPROJECT_API UCStateComponent : public UActorComponent
 {
 	GENERATED_BODY()
+
+public:
+	UCStateComponent();
+
+protected:
+	virtual void BeginPlay() override;
+
+public:
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+public:
+	void SetMove();
+	void SetStop();
+
+	void SetIdleMode();
+	void SetRollMode();
+	void SetAttackMode();
+	void SetTakeMode();
+	void SetConsumMode();
+	void SetTalkMode();
 
 public:
 	UFUNCTION(BlueprintPure)
@@ -38,26 +58,6 @@ public:
 
 	UFUNCTION(BlueprintPure)
 		bool IsCanTalk() const;
-
-public:
-	UCStateComponent();
-
-protected:
-	virtual void BeginPlay() override;
-
-public:
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-public:
-	void SetMove();
-	void SetStop();
-
-	void SetIdleMode();
-	void SetRollMode();
-	void SetAttackMode();
-	void SetTakeMode();
-	void SetConsumMode();
-	void SetTalkMode();
 
 private:
 	void ChangeType(EStateType InNewType);

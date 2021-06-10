@@ -50,9 +50,9 @@ void UCInventoryComponent::AddItem(FName InItemID, int32 InItemCount)
 	FInventoryItemInput input;
 	input.ItemID = InItemID;
 
-	FString ContextString;
+	FString contextString;
 	if (!!InventoryItemTable)
-		input.Desc = InventoryItemTable->FindRow<FInventoryItemDesc>(InItemID, ContextString);
+		input.Desc = InventoryItemTable->FindRow<FInventoryItemDesc>(InItemID, contextString);
 
 	CheckNull(input.Desc);
 
@@ -153,9 +153,9 @@ void UCInventoryComponent::AddItemConsumable(const FInventoryItemInput& InInput,
 	{
 		const FConsumableDesc* consumableDesc = nullptr;
 
-		FString ContextString;
+		FString contextString;
 		if (!!ConsumableTable)
-			consumableDesc = ConsumableTable->FindRow<FConsumableDesc>(InInput.ItemID, ContextString);
+			consumableDesc = ConsumableTable->FindRow<FConsumableDesc>(InInput.ItemID, contextString);
 
 		consumable = NewObject<UCInventoryItem_Consumable>()->
 			SetData(InInput, consumableDesc, InItemCount);
@@ -169,9 +169,9 @@ void UCInventoryComponent::AddItemEquipment(const FInventoryItemInput& InInput)
 {
 	const FEquipmentItemDesc* equipmentitemDesc = nullptr;
 
-	FString ContextString;
+	FString contextString;
 	if (!!EquipmentItemTable)
-		equipmentitemDesc = EquipmentItemTable->FindRow<FEquipmentItemDesc>(InInput.ItemID, ContextString);
+		equipmentitemDesc = EquipmentItemTable->FindRow<FEquipmentItemDesc>(InInput.ItemID, contextString);
 
 	CheckNull(equipmentitemDesc);
 
