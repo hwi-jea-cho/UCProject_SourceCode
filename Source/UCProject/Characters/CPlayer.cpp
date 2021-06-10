@@ -266,28 +266,24 @@ void ACPlayer::OnTargetRight()
 // [IE_Pressed] Quick1
 void ACPlayer::OnQuick1()
 {
-	CheckFalse(State->IsCanConsum());
 	QuickConsumable->OnQuick1();
 }
 
 // [IE_Pressed] Quick2
 void ACPlayer::OnQuick2()
 {
-	CheckFalse(State->IsCanConsum());
 	QuickConsumable->OnQuick2();
 }
 
 // [IE_Pressed] Quick3
 void ACPlayer::OnQuick3()
 {
-	CheckFalse(State->IsCanConsum());
 	QuickConsumable->OnQuick3();
 }
 
 // [IE_Pressed] Quick4
 void ACPlayer::OnQuick4()
 {
-	CheckFalse(State->IsCanConsum());
 	QuickConsumable->OnQuick4();
 }
 
