@@ -27,7 +27,7 @@ protected:
 		float HeadVert;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
-		float HeadSpeed = 1080.0f;
+		float HeadSpeed = 720.0f;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		EStanceType StanceType;

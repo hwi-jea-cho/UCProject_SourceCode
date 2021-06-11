@@ -28,7 +28,7 @@ ACPlayer::ACPlayer()
 	CHelpers::CreateActorComponent(this, &Interactor, "Interactor");
 	CHelpers::CreateActorComponent(this, &State, "State");
 	CHelpers::CreateActorComponent(this, &Motion, "Motion");
-	CHelpers::CreateActorComponent(this, &Stance, "Stance");
+	CHelpers::CreateActorComponent(this, &CStance, "CStance");
 	CHelpers::CreateActorComponent(this, &Status, "Status");
 	CHelpers::CreateActorComponent(this, &MoveSpeed, "MoveSpeed");
 	CHelpers::CreateActorComponent(this, &Equipment, "Equipment");
@@ -42,7 +42,7 @@ ACPlayer::ACPlayer()
 
 
 	// -- Character -- //
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 	bUseControllerRotationYaw = false;
 
 
@@ -93,6 +93,28 @@ void ACPlayer::BeginPlay()
 	Status->OnStatusChanged.AddDynamic(this, &ACPlayer::StatusChanged);
 	Inventory->SetCharacterStatus(Status->GetLocalStatus());
 	MoveSpeed->SetMoveSpeed(Status->GetMoveSpeed());
+}
+
+void ACPlayer::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	FRotator controlRotation = GetControlRotation();
+	controlRotation.Add(0.0f, 180.0f, 0.0f);
+	controlRotation.Pitch = -controlRotation.Pitch;
+
+	FRotator actorRotation = GetActorRotation();
+
+	if (FVector::DotProduct(controlRotation.Vector(), actorRotation.Vector()) >= 0.0f)
+	{
+		FRotator result = (controlRotation - actorRotation);
+		CStance->SetHeadRotation(result);
+	}
+	else
+	{
+		CStance->SetHeadRotation(FRotator());
+	}
+
 }
 
 void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

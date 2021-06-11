@@ -3,19 +3,17 @@
 #include "Components/Actor/CInteractorComponent.h"
 #include "Components/Actor/CTalkableComponent.h"
 #include "Components/Character/CStanceComponent.h"
-#include "Components/Character/CNpcPoseComponent.h"
 #include "Components/PlayerOnly/CLiteracyComponent.h"
 #include "Characters/CPlayer.h"
 
 ANonPlayerCharacter::ANonPlayerCharacter()
 {
-	PrimaryActorTick.bCanEverTick = false;
+	PrimaryActorTick.bCanEverTick = true;
 
 	CHelpers::CreateActorComponent(this, &Interactor, "Interactor");
 	CHelpers::CreateActorComponent(this, &Talkable, "Talkable");
 	CHelpers::CreateActorComponent(this, &State, "State");
 	CHelpers::CreateActorComponent(this, &Stance, "Stance");
-	CHelpers::CreateActorComponent(this, &Pose, "Pose");
 
 	Interactor->SetInteractorType(EInteractorType::NPC);
 
@@ -24,7 +22,7 @@ ANonPlayerCharacter::ANonPlayerCharacter()
 void ANonPlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	Interactor->OnInteraction.AddDynamic(this, &ANonPlayerCharacter::Interaction);
 	Interactor->OnInteractorConnected.AddDynamic(this, &ANonPlayerCharacter::OnInteractorConnected);
 	Interactor->OffInteractorConnected.AddDynamic(this, &ANonPlayerCharacter::OffInteractorConnected);
@@ -95,10 +93,19 @@ void ANonPlayerCharacter::ChangeHeadRotation()
 {
 	CheckNull(WatchingActor);
 
-	FVector src = GetOwner()->GetActorRotation().Vector();
-	FVector dest = WatchingActor->GetActorLocation() - GetOwner()->GetActorLocation();
+	FRotator src = GetOwner()->GetActorRotation();
+	FRotator dest = UKismetMathLibrary::FindLookAtRotation(
+		GetOwner()->GetActorLocation(), WatchingActor->GetActorLocation()
+	);
 
-	FRotator result = (dest.ToOrientationRotator() - src.ToOrientationRotator()).Clamp();
+	if (FVector::DotProduct(src.Vector(), dest.Vector()) >= 0.0f)
+	{
+		FRotator result = (dest - src);
+		Stance->SetHeadRotation(result);
+	}
+	else
+	{
+		Stance->SetHeadRotation(FRotator());
+	}
 
-	Stance->SetHeadRotation(result);
 }

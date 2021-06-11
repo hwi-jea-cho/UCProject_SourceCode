@@ -16,11 +16,11 @@ protected: // Scene Component
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		class USpringArmComponent* SpringArm;
 
-private: 
+protected:
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCameraComponent* Camera;
 
-private: // Actor Component
+protected: // Actor Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCInteractorComponent* Interactor;
 
@@ -31,7 +31,7 @@ private: // Actor Component
 		class UCMotionComponent* Motion;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		class UCStanceComponent* Stance;
+		class UCStanceComponent* CStance;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCStatusComponent* Status;
@@ -70,6 +70,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
+	virtual void Tick(float DeltaSeconds) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:

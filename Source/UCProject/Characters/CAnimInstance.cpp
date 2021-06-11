@@ -36,42 +36,32 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	IsCrouching = movement->IsCrouching();
 
 	float maxRotationDelta = HeadSpeed * DeltaSeconds;
+
 	if (TargetHoz != PrevHoz)
 	{
-		float newHoz = AdjustmentAngle(maxRotationDelta, PrevHoz, TargetHoz);
 		PrevHoz = HeadHoz;
-		HeadHoz = newHoz;
+		HeadHoz = AdjustmentAngle(maxRotationDelta, HeadHoz, TargetHoz);
 	}
 
 	if (TargetVert != PrevVert)
 	{
-		float newVert = AdjustmentAngle(maxRotationDelta, PrevVert, TargetVert);
 		PrevVert = HeadVert;
-		HeadVert = newVert;
+		HeadVert = AdjustmentAngle(maxRotationDelta, HeadVert, TargetVert);
 	}
 }
 
 float UCAnimInstance::AdjustmentAngle(float InMaxDelta, float InOldAngle, float InNewAngle)
 {
-	float result;
-
-	// 각도 변환
-	// 0~90, 270~360 -> -90~90
-	if (InNewAngle <= 90.0f)
-		result = InNewAngle;
-	else if (InNewAngle >= 270)
-		result = InNewAngle - 360.0f;
-	else
-		result = 0.0f;
-
 	// 최대 회전 크기까지 만큼 회전
-	float dest = result - InOldAngle;
-	if (dest > InMaxDelta)
-		result = InOldAngle + InMaxDelta;
-	else if (dest < -InMaxDelta)
-		result = InOldAngle - InMaxDelta;
+	float dest = InNewAngle - InOldAngle;
 
-	return result;
+	if (dest > InMaxDelta)
+		return InOldAngle + InMaxDelta;
+
+	if (dest < -InMaxDelta)
+		return InOldAngle - InMaxDelta;
+
+	return InNewAngle;
 }
 
 
@@ -82,6 +72,9 @@ void UCAnimInstance::OnChangedStance(EStanceType InPrevType, EStanceType InNewTy
 
 void UCAnimInstance::OnChangedHeadRotation(FRotator InRotator)
 {
+	InRotator = InRotator.Vector().ToOrientationRotator();
+
 	TargetHoz = InRotator.Yaw;
 	TargetVert = InRotator.Pitch;
+
 }

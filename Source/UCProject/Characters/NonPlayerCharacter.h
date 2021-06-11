@@ -23,9 +23,6 @@ protected: // Actor Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCStanceComponent* Stance;
 
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCNpcPoseComponent* Pose;
-
 
 public:
 	ANonPlayerCharacter();

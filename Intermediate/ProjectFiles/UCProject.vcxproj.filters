@@ -193,12 +193,6 @@
     <ClInclude Include="..\..\Source\UCProject\Components\Character\CMoveSpeedComponent.h">
       <Filter>Source\UCProject\Components\Character</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\UCProject\Components\Character\CNpcPoseComponent.cpp">
-      <Filter>Source\UCProject\Components\Character</Filter>
-    </ClCompile>
-    <ClInclude Include="..\..\Source\UCProject\Components\Character\CNpcPoseComponent.h">
-      <Filter>Source\UCProject\Components\Character</Filter>
-    </ClInclude>
     <ClCompile Include="..\..\Source\UCProject\Components\Character\CStanceComponent.cpp">
       <Filter>Source\UCProject\Components\Character</Filter>
     </ClCompile>
@@ -394,10 +388,10 @@
     <ClInclude Include="..\..\Source\UCProject\Types\CStatusInstance.h">
       <Filter>Source\UCProject\Types</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\UCProject\Types\MontageDesc.cpp">
+    <ClCompile Include="..\..\Source\UCProject\Types\MontageUnit.cpp">
       <Filter>Source\UCProject\Types</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\UCProject\Types\MontageDesc.h">
+    <ClInclude Include="..\..\Source\UCProject\Types\MontageUnit.h">
       <Filter>Source\UCProject\Types</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Utilities">
