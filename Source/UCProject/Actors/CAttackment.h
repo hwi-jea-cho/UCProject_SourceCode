@@ -5,6 +5,8 @@
 #include "DataAssets/CComboData.h"
 #include "CAttackment.generated.h"
 
+DECLARE_DELEGATE(FAttackedAttackment);
+
 UCLASS()
 class UCPROJECT_API ACAttackment : public AActor
 {
@@ -17,12 +19,6 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 		class ACharacter* OwnerCharacter;
 
-	UPROPERTY(BlueprintReadOnly)
-		class UCStateComponent* State;
-
-	UPROPERTY(BlueprintReadOnly)
-		class UCCommendComponent* Commend;
-
 
 public:	
 	ACAttackment();
@@ -32,12 +28,12 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-
 public:
 	bool IsVialdCommend(EAttackCommend InCommend);
 	ACAttackment* GetNextCombo(EAttackCommend InCommend);
 	void AddNaxtCombo(ACAttackment* InNext);
 	void ReverseSpawnNaxtCombos();
+	void TakeDamage_Attackment(AActor* InAttackerCauser, AActor* InAttackTarget);
 
 
 public:
@@ -48,12 +44,17 @@ public:
 
 	// 공격 종료 애님 노티파이
 	UFUNCTION(BlueprintNativeEvent)
-		void OnAttacked();
-	void OnAttacked_Implementation();
+		void Attacked();
+	void Attacked_Implementation();
 
+public:
+	FAttackedAttackment OnAttacked;
 
 private:
+	class UCStateComponent* State;
+	class UCComboComponent* Combo;
+	class UCTeamComponent* AttackTarget;
+
 	FAttackmentData Data;
 	TArray<ACAttackment*> NextCombos;
-
 };

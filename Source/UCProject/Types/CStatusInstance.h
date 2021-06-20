@@ -35,6 +35,11 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FStatusChanged, class UCStatusInstance*, InValue);
 
+// --
+// 스텟에 증감 연산 사용을 지양하기 위한 클래스
+// 상태이상 등으로 증감하고 싶다면 자식으로 추가하고,
+// 복구되면 자식에서 제거하는 방법을 권장합니다.
+// --
 UCLASS()
 class UCPROJECT_API UCStatusInstance : public UObject
 {

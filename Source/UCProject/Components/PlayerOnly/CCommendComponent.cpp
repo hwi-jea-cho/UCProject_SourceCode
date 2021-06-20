@@ -3,7 +3,6 @@
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/Character/CEquipmentComponent.h"
-#include "Components/Character/CStateComponent.h"
 #include "Components/Attachment/CComboComponent.h"
 #include "Actors/CAttachment.h"
 
@@ -18,8 +17,9 @@ void UCCommendComponent::BeginPlay()
 	Super::BeginPlay();
 
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
-	State = CHelpers::GetComponent<UCStateComponent>(OwnerCharacter);
 	Equipment = CHelpers::GetComponent<UCEquipmentComponent>(OwnerCharacter);
+	OnChangedWeapon(Equipment->GetEquipedWeapon());
+	Equipment->OnChangedWeapon.AddDynamic(this, &UCCommendComponent::OnChangedWeapon);
 }
 
 // Player
@@ -40,49 +40,10 @@ void UCCommendComponent::StrongAttack()
 // Private
 void UCCommendComponent::BeginCombo()
 {
-	CheckFalse(State->IsCanAttack());
+	CheckNull(CurrCombo);
 
-	CurrWeapon = Equipment->GetEquipedAttachment();
-	CheckFalse(!!CurrWeapon);
-
-	CurrCombo = CHelpers::GetComponent<UCComboComponent>(CurrWeapon);
-	EAttackCommend curr = GetCurrCommend();
-
-	if (IsVialdCommend(curr))
-	{
-		CurrCombo->SetAttackMode(curr);
-		CurrWeapon->Equip();
-		State->SetAttackMode();
-	}
-
-	InputCommend = EInputCommend::None;
+	CurrCombo->StartCombo();
 }
-
-// ACAttackment
-void UCCommendComponent::NextCombo()
-{
-	EAttackCommend curr = GetCurrCommend();
-	if (IsVialdCommend(curr))
-	{
-		CurrCombo->SetAttackMode(curr);
-		InputCommend = EInputCommend::None;
-	}
-	else
-	{
-		FinishAttack();
-	}
-}
-
-// None
-void UCCommendComponent::FinishAttack()
-{
-	CurrCombo->ResetCombo();
-	CurrWeapon->Unequip();
-	State->SetIdleMode();
-
-	InputCommend = EInputCommend::None;
-}
-
 
 // Private
 EAttackCommend UCCommendComponent::GetCurrCommend()
@@ -106,14 +67,21 @@ EAttackCommend UCCommendComponent::GetCurrCommend()
 		}
 	}
 
+	InputCommend = EInputCommend::None;
 	return result;
 }
 
-// Private
-bool UCCommendComponent::IsVialdCommend(EAttackCommend InCommend)
+// Equipment->OnChangedWeapon
+void UCCommendComponent::OnChangedWeapon(ACAttachment* InNewEquipment)
 {
-	CheckFalseResult(!!CurrCombo, false);
+	if (!!CurrCombo)
+	{
+		CurrCombo->GetNextCommend.Unbind();
+		CurrCombo = nullptr;
+	}
 
-	return CurrCombo->IsVialdCommend(InCommend);
+	CurrCombo = CHelpers::GetComponent<UCComboComponent>(InNewEquipment);
+	CheckNull(CurrCombo);
+	CurrCombo->GetNextCommend.BindUFunction(this, "GetCurrCommend");
 }
 

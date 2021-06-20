@@ -21,7 +21,7 @@ void UCAnimNotifyState_Equip::NotifyBegin(USkeletalMeshComponent* MeshComp, UAni
 	CheckNull(equipment);
 
 	// 무기
-	ACAttachment* weapon = equipment->GetEquipedAttachment();
+	ACAttachment* weapon = equipment->GetEquipedWeapon();
 	CheckNull(weapon);
 
 	weapon->Begin_Equip();
@@ -40,7 +40,7 @@ void UCAnimNotifyState_Equip::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimS
 	CheckNull(equipment);
 
 	// 무기
-	ACAttachment* weapon = equipment->GetEquipedAttachment();
+	ACAttachment* weapon = equipment->GetEquipedWeapon();
 	CheckNull(weapon);
 
 	weapon->End_Equip();

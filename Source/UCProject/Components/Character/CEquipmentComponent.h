@@ -4,6 +4,7 @@
 #include "Components/ActorComponent.h"
 #include "CEquipmentComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FChangedEquipment, class ACAttachment*, InNewEquipment);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UCPROJECT_API UCEquipmentComponent : public UActorComponent
@@ -28,7 +29,9 @@ public:
 	void EquipArmor(class UCEquipmentItem* InItem);
 	void EquipAccessory(class UCEquipmentItem* InItem);
 	void ChangeWeapon();
-	FName GetEquipedWeapon() const;
+
+public:
+	FChangedEquipment OnChangedWeapon;
 
 private:
 	UPROPERTY() class UCEquipmentItem* Weapon;
@@ -47,7 +50,7 @@ private:
 	bool bTriggerNextWeapon = false;
 
 public:
-	FORCEINLINE class ACAttachment* GetEquipedAttachment() const {
+	FORCEINLINE class ACAttachment* GetEquipedWeapon() const {
 		return (!!EquipedWeapon) ? EquipedWeapon : DefaultWeapon;
 	}
 

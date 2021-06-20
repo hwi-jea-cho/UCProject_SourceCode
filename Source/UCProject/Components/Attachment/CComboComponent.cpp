@@ -1,7 +1,7 @@
 #include "CComboComponent.h"
 #include "Global.h"
 #include "GameFramework/Character.h"
-#include "Actors/CAttackment.h"
+#include "Components/Character/CStateComponent.h"
 #include "Actors/CAttachment.h"
 
 UCComboComponent::UCComboComponent()
@@ -9,27 +9,21 @@ UCComboComponent::UCComboComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
+void UCComboComponent::SetFirstCombo(UCComboData* InFirst)
+{
+	if (!!FirstAttack)
+		FirstAttack->Destroy();
+
+	FirstAttack = InFirst->Spawn(Cast<ACAttachment>(GetOwner()));
+}
+
 void UCComboComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	FTransform transform;
-	ACAttackment* Attackment = GetWorld()->SpawnActorDeferred<ACAttackment>(ACAttackment::StaticClass(), transform, GetOwner());
-	Attackment->AttachToComponent(GetOwner()->GetRootComponent(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
-	UGameplayStatics::FinishSpawningActor(Attackment, transform);
-	FirstAttack = Attackment;
-
-	ACAttachment* attachment = Cast<ACAttachment>(GetOwner());
-	ACAttackment* naxt;
-	for (UCComboData* data : FirstComboDatas)
-	{
-		if (!!data)
-		{
-			naxt = data->Spawn(attachment);
-			if (!!naxt)
-				FirstAttack->AddNaxtCombo(naxt);
-		}
-	}
+	OwnerWeapon = Cast<ACAttachment>(GetOwner());
+	ACharacter* OwnerCharacter = Cast<ACharacter>(OwnerWeapon->GetOwner());
+	State = CHelpers::GetComponent<UCStateComponent>(OwnerCharacter);
 }
 
 void UCComboComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -39,36 +33,60 @@ void UCComboComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	FirstAttack->Destroy();
 }
 
-void UCComboComponent::SetFirstCombo(UCComboData* InFirst)
+
+void UCComboComponent::StartCombo()
 {
-	FirstAttack->Destroy();
-	FirstAttack = InFirst->Spawn(Cast<ACAttachment>(GetOwner()));
+	CheckFalse(State->IsCanAttack());
+
+	OwnerWeapon->Equip();
+	State->SetAttackMode();
+
+	Attack();
 }
 
-bool UCComboComponent::IsVialdCommend(EAttackCommend InCommend)
-{
-	ACAttackment* NextCombo;
 
-	if (!!ComboCurr)
-		NextCombo = ComboCurr->GetNextCombo(InCommend);
+void UCComboComponent::FinishCombo()
+{
+	if (!!CurrCombo)
+		CurrCombo->OnAttacked.Unbind();
+
+	CurrCombo = nullptr;
+
+	OwnerWeapon->Unequip();
+	State->SetIdleMode();
+}
+
+// CurrCombo -> OnAttacked
+void UCComboComponent::Attack()
+{
+	CheckFalse(State->IsAttackMode());
+
+	EAttackCommend commend = EAttackCommend::None;
+	if (GetNextCommend.IsBound())
+	{
+		commend = GetNextCommend.Execute();
+	}
+
+	ACAttackment* nextCombo;
+	if (!!CurrCombo)
+		nextCombo = CurrCombo->GetNextCombo(commend);
 	else
-		NextCombo = FirstAttack->GetNextCombo(InCommend);
+		nextCombo = FirstAttack->GetNextCombo(commend);
 
-	return (!!NextCombo);
-}
+	if (!!nextCombo)
+	{
+		if (!!CurrCombo)
+			CurrCombo->OnAttacked.Unbind();
 
-void UCComboComponent::SetAttackMode(EAttackCommend InCommend)
-{
-	if (!!ComboCurr)
-		ComboCurr = ComboCurr->GetNextCombo(InCommend);
+		CurrCombo = nextCombo;
+
+		nextCombo->OnAttacked.BindUFunction(this, "Attack");
+		nextCombo->Attack();
+	}
 	else
-		ComboCurr = FirstAttack->GetNextCombo(InCommend);
+	{
+		FinishCombo();
+	}
 
-	if (!!ComboCurr)
-		ComboCurr->Attack();
 }
 
-void UCComboComponent::ResetCombo()
-{
-	ComboCurr = nullptr;
-}

@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\UCProject.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{DAA9F420-2536-401A-9096-A4B92D8B4A9A}</UniqueIdentifier>
+      <UniqueIdentifier>{AA5D2656-8799-4CD9-8C91-76D861D63FAA}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\UCProject.Target.cs">
       <Filter>Source</Filter>
@@ -14,7 +14,7 @@
     <None Include="..\..\.gitattributes" />
     <None Include="..\..\.gitignore" />
     <Filter Include="Config">
-      <UniqueIdentifier>{150FA4A9-13A2-4EB9-AB75-6A2559143F1B}</UniqueIdentifier>
+      <UniqueIdentifier>{84DAD26B-266F-4709-8089-3E90B8DD965B}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\ConsumableList.csv">
       <Filter>Config</Filter>
@@ -43,11 +43,14 @@
     <None Include="..\..\Config\MentList.csv">
       <Filter>Config</Filter>
     </None>
+    <None Include="..\..\Config\PlayerMotionList.csv">
+      <Filter>Config</Filter>
+    </None>
     <None Include="..\..\Config\PlayerWeaponList.csv">
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\UCProject">
-      <UniqueIdentifier>{9161FE70-B9CF-4809-B305-77EC9147F972}</UniqueIdentifier>
+      <UniqueIdentifier>{739EF593-0D37-4908-9D4D-9A44E3BFAD32}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\CGameMode.cpp">
       <Filter>Source\UCProject</Filter>
@@ -68,7 +71,7 @@
       <Filter>Source\UCProject</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Actors">
-      <UniqueIdentifier>{71F734AE-5C38-4EE0-9F60-3565FB7ED23B}</UniqueIdentifier>
+      <UniqueIdentifier>{6C10D3EA-70DC-4C45-A9AB-5662700CFFA8}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\Actors\CAttachment.cpp">
       <Filter>Source\UCProject\Actors</Filter>
@@ -113,7 +116,7 @@
       <Filter>Source\UCProject\Actors</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Characters">
-      <UniqueIdentifier>{540AC1BD-D6C6-49FE-9FBA-1FADAB0FE977}</UniqueIdentifier>
+      <UniqueIdentifier>{9C4C5E84-5147-4D9C-8E31-086934820E27}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\Characters\CAnimInstance.cpp">
       <Filter>Source\UCProject\Characters</Filter>
@@ -134,10 +137,10 @@
       <Filter>Source\UCProject\Characters</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Components">
-      <UniqueIdentifier>{947800E4-5B92-4500-B827-F02AB623024E}</UniqueIdentifier>
+      <UniqueIdentifier>{5BFA4746-1FA4-45CD-A5A7-8951F4AD30B7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\UCProject\Components\Actor">
-      <UniqueIdentifier>{D906BAF8-54AC-44CB-BF25-1931A9787392}</UniqueIdentifier>
+      <UniqueIdentifier>{886BCC2A-45A0-4284-A60E-158C7523C796}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\Components\Actor\CInteractorComponent.cpp">
       <Filter>Source\UCProject\Components\Actor</Filter>
@@ -164,7 +167,7 @@
       <Filter>Source\UCProject\Components\Actor</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Components\Attachment">
-      <UniqueIdentifier>{D9F0B5E0-534C-478E-A1A4-A4FE2DE341F6}</UniqueIdentifier>
+      <UniqueIdentifier>{DC0A32C3-230A-4AF9-A16F-2ED55C981928}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\Components\Attachment\CComboComponent.cpp">
       <Filter>Source\UCProject\Components\Attachment</Filter>
@@ -173,7 +176,7 @@
       <Filter>Source\UCProject\Components\Attachment</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Components\Character">
-      <UniqueIdentifier>{18873A81-F140-4466-83F5-BC8C048D3462}</UniqueIdentifier>
+      <UniqueIdentifier>{09F5C827-FD77-4CED-9C4C-CF6DB0D2522F}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\Components\Character\CEquipmentComponent.cpp">
       <Filter>Source\UCProject\Components\Character</Filter>
@@ -212,7 +215,7 @@
       <Filter>Source\UCProject\Components\Character</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Components\PlayerOnly">
-      <UniqueIdentifier>{90BB7253-C8A6-463D-8FB7-BD05C8AE69B4}</UniqueIdentifier>
+      <UniqueIdentifier>{2B13704A-285B-46D3-B7F7-372F27D87382}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\Components\PlayerOnly\CCommendComponent.cpp">
       <Filter>Source\UCProject\Components\PlayerOnly</Filter>
@@ -257,7 +260,7 @@
       <Filter>Source\UCProject\Components\PlayerOnly</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\DataAssets">
-      <UniqueIdentifier>{0CCA8E07-E498-4B73-997B-9D1A7D76CFCE}</UniqueIdentifier>
+      <UniqueIdentifier>{C5D228D6-512F-4BDB-8C5C-9C49DCACAA0F}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\DataAssets\CComboData.cpp">
       <Filter>Source\UCProject\DataAssets</Filter>
@@ -278,8 +281,14 @@
       <Filter>Source\UCProject\DataAssets</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Notifies">
-      <UniqueIdentifier>{F2DE9557-7B62-4BBB-AA05-5845FA4AB703}</UniqueIdentifier>
+      <UniqueIdentifier>{52A647AA-B3A1-493D-BFFE-61C41BF120FC}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\UCProject\Notifies\CAnimNotifyState_Collision.cpp">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Notifies\CAnimNotifyState_Collision.h">
+      <Filter>Source\UCProject\Notifies</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\UCProject\Notifies\CAnimNotifyState_Equip.cpp">
       <Filter>Source\UCProject\Notifies</Filter>
     </ClCompile>
@@ -317,7 +326,7 @@
       <Filter>Source\UCProject\Notifies</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\TableDatas">
-      <UniqueIdentifier>{D2B78574-4F12-4D2B-8C6B-2DDF942E4F96}</UniqueIdentifier>
+      <UniqueIdentifier>{433DC43C-D0DE-4D53-98A7-82E1E039E888}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\TableDatas\ConsumableDesc.cpp">
       <Filter>Source\UCProject\TableDatas</Filter>
@@ -350,12 +359,18 @@
       <Filter>Source\UCProject\TableDatas</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Types">
-      <UniqueIdentifier>{6EA310A1-9D77-497E-84DC-A90BDCD1A4EB}</UniqueIdentifier>
+      <UniqueIdentifier>{6A700E3F-1926-4564-AF07-AB6E10EB7521}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\Types\CEquipmentItem.cpp">
       <Filter>Source\UCProject\Types</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\UCProject\Types\CEquipmentItem.h">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UCProject\Types\CHittedCollector.cpp">
+      <Filter>Source\UCProject\Types</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UCProject\Types\CHittedCollector.h">
       <Filter>Source\UCProject\Types</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\UCProject\Types\CInventoryItem.cpp">
@@ -388,14 +403,14 @@
     <ClInclude Include="..\..\Source\UCProject\Types\CStatusInstance.h">
       <Filter>Source\UCProject\Types</Filter>
     </ClInclude>
-    <ClCompile Include="..\..\Source\UCProject\Types\MontageUnit.cpp">
+    <ClCompile Include="..\..\Source\UCProject\Types\MontageDesc.cpp">
       <Filter>Source\UCProject\Types</Filter>
     </ClCompile>
-    <ClInclude Include="..\..\Source\UCProject\Types\MontageUnit.h">
+    <ClInclude Include="..\..\Source\UCProject\Types\MontageDesc.h">
       <Filter>Source\UCProject\Types</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Utilities">
-      <UniqueIdentifier>{5CD8B76F-5794-4C6D-A475-EB474CDF64FC}</UniqueIdentifier>
+      <UniqueIdentifier>{6DB7D110-E8A6-4F5A-BCA8-0ACB15E17DD6}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\UCProject\Utilities\CHelpers.h">
       <Filter>Source\UCProject\Utilities</Filter>
@@ -410,7 +425,7 @@
       <Filter>Source\UCProject\Utilities</Filter>
     </ClInclude>
     <Filter Include="Source\UCProject\Widgets">
-      <UniqueIdentifier>{7AA4782F-1C78-47DD-9ADA-8380574058AE}</UniqueIdentifier>
+      <UniqueIdentifier>{D71801CE-3C97-4545-BE2D-10CAF9BCA1C6}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\UCProject\Widgets\CUserWidget_Consumable.cpp">
       <Filter>Source\UCProject\Widgets</Filter>

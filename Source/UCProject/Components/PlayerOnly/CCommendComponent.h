@@ -28,20 +28,20 @@ public:
 	void WeakAttack();
 	void StrongAttack();
 
-	void NextCombo();
-	void FinishAttack();
 
 private:
 	void BeginCombo();
-	EAttackCommend GetCurrCommend();
-	bool IsVialdCommend(EAttackCommend InCommend);
+
+	UFUNCTION()
+		EAttackCommend GetCurrCommend();
+	
+	UFUNCTION()
+		void OnChangedWeapon(class ACAttachment* InNewEquipment);
 
 private:
 	class ACharacter* OwnerCharacter;
 	class UCEquipmentComponent* Equipment;
-	class UCStateComponent* State;
 
-	class ACAttachment* CurrWeapon;
 	class UCComboComponent* CurrCombo;
 
 	EInputCommend InputCommend;

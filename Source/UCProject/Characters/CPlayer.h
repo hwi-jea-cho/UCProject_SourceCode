@@ -30,6 +30,7 @@ protected: // Actor Component
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCMotionComponent* Motion;
 
+	// CStance : Stance 하면 null 떠서 임시로 CStance로 바꿨다.
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCStanceComponent* CStance;
 

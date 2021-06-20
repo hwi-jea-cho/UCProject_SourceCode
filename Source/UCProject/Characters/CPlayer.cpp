@@ -112,7 +112,7 @@ void ACPlayer::Tick(float DeltaSeconds)
 	}
 	else
 	{
-		CStance->SetHeadRotation(FRotator());
+		CStance->SetHeadRotation(FRotator::ZeroRotator);
 	}
 
 }
@@ -172,13 +172,15 @@ void ACPlayer::OnMoveRight(float InAxis)
 // [Axis] Turn
 void ACPlayer::OnTurn(float InAxis)
 {
-	AddControllerYawInput(InAxis);
+	float rate = Option->GetMouseLookRate();
+	AddControllerYawInput(InAxis * rate);
 }
 
 // [Axis] LookUp
 void ACPlayer::OnLookUp(float InAxis)
 {
-	AddControllerPitchInput(InAxis);
+	float rate = Option->GetMouseLookRate();
+	AddControllerPitchInput(InAxis * rate);
 }
 
 // [Axis] TurnRate
@@ -198,7 +200,7 @@ void ACPlayer::OnLookUpRate(float InAxis)
 // [Axis] Zoom
 void ACPlayer::OnZoom(float InAxis)
 {
-	SpringArm->TargetArmLength += (10.0f * InAxis);
+	SpringArm->TargetArmLength += (Option->GetZoomRate() * InAxis);
 }
 
 // [IE_Pressed] Rolling

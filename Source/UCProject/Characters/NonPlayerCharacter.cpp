@@ -86,7 +86,7 @@ void ANonPlayerCharacter::SetWatchingActor(AActor* InActor)
 	WatchingActor = InActor;
 
 	if (InActor == nullptr)
-		Stance->SetHeadRotation(FRotator());
+		Stance->SetHeadRotation(FRotator::ZeroRotator);
 }
 
 void ANonPlayerCharacter::ChangeHeadRotation()
@@ -105,7 +105,7 @@ void ANonPlayerCharacter::ChangeHeadRotation()
 	}
 	else
 	{
-		Stance->SetHeadRotation(FRotator());
+		Stance->SetHeadRotation(FRotator::ZeroRotator);
 	}
 
 }

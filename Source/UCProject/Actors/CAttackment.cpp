@@ -1,8 +1,9 @@
 #include "CAttackment.h"
 #include "Global.h"
 #include "GameFramework/Character.h"
+#include "Components/Actor/CTeamComponent.h"
 #include "Components/Character/CStateComponent.h"
-#include "Components/PlayerOnly/CCommendComponent.h"
+#include "Components/Attachment/CComboComponent.h"
 #include "CAttachment.h"
 
 ACAttackment::ACAttackment()
@@ -20,11 +21,11 @@ void ACAttackment::BeginPlay()
 	OwnerWeapon = Cast<ACAttachment>(GetOwner());
 	OwnerCharacter = Cast<ACharacter>(OwnerWeapon->GetOwner());
 	State = CHelpers::GetComponent<UCStateComponent>(OwnerCharacter);
-	Commend = CHelpers::GetComponent<UCCommendComponent>(OwnerCharacter);
+	Combo = CHelpers::GetComponent<UCComboComponent>(OwnerCharacter);
+	AttackTarget = CHelpers::GetComponent<UCTeamComponent>(OwnerCharacter);
 
 	// 블프
 	Super::BeginPlay();
-	
 }
 
 void ACAttackment::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -75,6 +76,19 @@ void ACAttackment::ReverseSpawnNaxtCombos()
 	NextCombos.Empty();
 }
 
+void ACAttackment::TakeDamage_Attackment(AActor* InAttackerCauser, AActor* InAttackTarget)
+{
+	UCTeamComponent* attackTargetTeam = CHelpers::GetComponent<UCTeamComponent>(InAttackTarget);
+
+	CheckNull(attackTargetTeam);
+	CheckFalse(attackTargetTeam->IsEnemy());
+
+	//Take Damage
+	FDamageEvent e;
+	InAttackTarget->TakeDamage(1.0f, e, OwnerCharacter->GetController(), InAttackerCauser);
+}
+
+
 // ComboComponent
 void ACAttackment::Attack_Implementation()
 {
@@ -87,19 +101,23 @@ void ACAttackment::Attack_Implementation()
 		OwnerCharacter->PlayAnimMontage(Data.AnimMontage, Data.PlayRatio, Data.StartSection);
 	else
 	{
-		OnAttacked();
+		Attacked();
 	}
 }
 
 // Notify (공격 종료)
-void ACAttackment::OnAttacked_Implementation()
+void ACAttackment::Attacked_Implementation()
 {
 	if (Data.bCanMove == false)
 	{
 		State->SetMove();
 	}
 
-	Commend->NextCombo();
+	if (OnAttacked.IsBound())
+	{
+		OnAttacked.Execute();
+	}
+
 }
 
 

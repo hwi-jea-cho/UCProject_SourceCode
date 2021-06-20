@@ -23,7 +23,7 @@ void UCAnimNotify_Attacked::Notify(USkeletalMeshComponent* MeshComp, UAnimSequen
 	CheckNull(equipment);
 
 	// ¹«±â
-	ACAttachment* weapon = equipment->GetEquipedAttachment();
+	ACAttachment* weapon = equipment->GetEquipedWeapon();
 	CheckNull(weapon);
 
 	// ÄŞº¸
@@ -35,5 +35,5 @@ void UCAnimNotify_Attacked::Notify(USkeletalMeshComponent* MeshComp, UAnimSequen
 	ACAttackment* attackment = combo->GetCurrentAttack();
 	CheckNull(attackment);
 
-	attackment->OnAttacked();
+	attackment->Attacked();
 }

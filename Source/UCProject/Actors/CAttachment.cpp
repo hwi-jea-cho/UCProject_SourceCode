@@ -1,8 +1,12 @@
 #include "CAttachment.h"
 #include "Global.h"
 #include "GameFramework/Character.h"
+#include "Types/CHittedCollector.h"
+#include "Components/ShapeComponent.h"
+#include "Components/Actor/CTeamComponent.h"
 #include "Components/Character/CStanceComponent.h"
 #include "Components/Attachment/CComboComponent.h"
+#include "Actors/CAttackment.h"
 
 ACAttachment::ACAttachment()
 {
@@ -19,8 +23,16 @@ void ACAttachment::SetData(const FAttachmentData& InData)
 
 void ACAttachment::BeginPlay()
 {
+	HittedCollector = NewObject<UCHittedCollector>();
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
 	Stance = CHelpers::GetComponent<UCStanceComponent>(OwnerCharacter);
+
+	GetComponents<UShapeComponent>(ShapeComponents);
+	for (UShapeComponent* component : ShapeComponents)
+	{
+		component->OnComponentBeginOverlap.AddDynamic(this, &ACAttachment::OnComponentBeginOverlap);
+	}
+	OffCollision();
 
 	// บํวม
 	Super::BeginPlay();
@@ -34,6 +46,17 @@ void ACAttachment::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void ACAttachment::AttachTo(FName InSocketName)
 {
 	AttachToComponent
+	(
+		OwnerCharacter->GetMesh(),
+		FAttachmentTransformRules(EAttachmentRule::KeepRelative, true),
+		InSocketName
+	);
+
+}
+
+void ACAttachment::AttachToCollision(USceneComponent* InComponent, FName InSocketName)
+{
+	InComponent->AttachToComponent
 	(
 		OwnerCharacter->GetMesh(),
 		FAttachmentTransformRules(EAttachmentRule::KeepRelative, true),
@@ -100,4 +123,31 @@ void ACAttachment::End_Unequip_Implementation()
 		OnUnequip();
 		Stance->SetUnarmedMode();
 	}
+}
+
+
+void ACAttachment::OnCollision()
+{
+	HittedCollector->ResetCollection();
+
+	for (UShapeComponent* component : ShapeComponents)
+		component->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+}
+
+void ACAttachment::OffCollision()
+{
+	HittedCollector->ResetCollection();
+
+	for (UShapeComponent* component : ShapeComponents)
+		component->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void ACAttachment::OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	CheckTrue(OwnerCharacter == OtherActor);
+	CheckFalse(HittedCollector->CollectHitted(OtherActor));
+
+	CheckNull(Combo->GetCurrentAttack());
+	Combo->GetCurrentAttack()->TakeDamage_Attackment(this, OtherActor);
+
 }

@@ -206,6 +206,7 @@ AActor* UCTargetingComponent::GetNearbyAttackTarget()
 	TArray<AActor*> ignores;
 	ignores.Add(GetOwner());
 	objectTypes.Add(EObjectTypeQuery::ObjectTypeQuery3);
+	objectTypes.Add(EObjectTypeQuery::ObjectTypeQuery6);
 	CheckFalseResult(UKismetSystemLibrary::SphereTraceMultiForObjects
 	(
 		GetWorld(), start, end,
@@ -223,6 +224,9 @@ AActor* UCTargetingComponent::GetNearbyAttackTarget()
 
 		UCTeamComponent* team = CHelpers::GetComponent<UCTeamComponent>(hit.GetActor());
 		if (!!team == false)
+			continue;
+
+		if (team->IsEnemy() == false)
 			continue;
 
 		FVector forward = GetOwner()->GetActorRotation().Quaternion().GetForwardVector();

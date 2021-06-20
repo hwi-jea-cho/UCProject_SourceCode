@@ -141,8 +141,8 @@ void UCEquipmentComponent::ChangeWeapon()
 		DefaultWeapon->End_Unequip();
 	}
 
-}
-FName UCEquipmentComponent::GetEquipedWeapon() const
-{ 
-	return Weapon->GetItemID(); 
+	if (OnChangedWeapon.IsBound())
+	{
+		OnChangedWeapon.Broadcast(EquipedWeapon);
+	}
 }

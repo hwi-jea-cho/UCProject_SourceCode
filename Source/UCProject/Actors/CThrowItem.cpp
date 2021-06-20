@@ -2,7 +2,10 @@
 #include "Global.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "GameFramework/Character.h"
 #include "Components/SphereComponent.h"
+#include "Components/Actor/CTeamComponent.h"
+#include "CConsumableActor.h"
 
 ACThrowItem::ACThrowItem()
 {
@@ -48,8 +51,24 @@ void ACThrowItem::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), Explosion, transform);
 		}
-		OnExplosion();
 	}
+}
+
+void ACThrowItem::TakeDamage_ThrowItem(float InDamageAmount, AActor* InAttackTarget)
+{
+	UCTeamComponent* attackTargetTeam = CHelpers::GetComponent<UCTeamComponent>(InAttackTarget);
+
+	CheckNull(attackTargetTeam);
+	CheckFalse(attackTargetTeam->IsEnemy());
+
+	ACConsumableActor* consumable = Cast<ACConsumableActor>(GetOwner());
+	CheckNull(consumable);
+	ACharacter* character = Cast<ACharacter>(consumable->GetOwner());
+	CheckNull(character);
+
+	//Take Damage
+	FDamageEvent e;
+	InAttackTarget->TakeDamage(InDamageAmount, e, character->GetController(), this);
 }
 
 void ACThrowItem::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -71,7 +90,6 @@ void ACThrowItem::OnComponentHit(UPrimitiveComponent* HitComponent, AActor* Othe
 	if (OnThrowBeginOverlap.IsBound())
 		OnThrowBeginOverlap.Broadcast(Hit);
 
-	OnExplosion();
 	Destroy();
 }
 

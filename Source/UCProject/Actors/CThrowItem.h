@@ -6,7 +6,6 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FThrowBeginOverlap, const FHitResult&, InHitResult);
 
-
 UCLASS()
 class UCPROJECT_API ACThrowItem : public AActor
 {
@@ -41,8 +40,8 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:
-	UFUNCTION(BlueprintImplementableEvent)
-		void OnExplosion();
+	UFUNCTION(BlueprintCallable)
+		void TakeDamage_ThrowItem(float InDamageAmount, AActor* InAttackTarget);
 
 private:
 	UFUNCTION()

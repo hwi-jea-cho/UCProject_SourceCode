@@ -3,7 +3,10 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "DataAssets/CComboData.h"
+#include "Actors/CAttackment.h"
 #include "CComboComponent.generated.h"
+
+DECLARE_DELEGATE_RetVal(EAttackCommend, FGetNextCommend);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class UCPROJECT_API UCComboComponent : public UActorComponent
@@ -14,25 +17,36 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 		TArray<UCComboData*> FirstComboDatas;
 
-public:
-	UFUNCTION(BlueprintPure)
-		FORCEINLINE class ACAttackment* GetCurrentAttack() const { return ComboCurr; }
-
 
 public:	
 	UCComboComponent();
+	void SetFirstCombo(UCComboData* InFirst);
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:
-	void SetFirstCombo(UCComboData* InFirst);
-	bool IsVialdCommend(EAttackCommend InCommend);
-	void SetAttackMode(EAttackCommend InCommend);
-	void ResetCombo();
+	void StartCombo();
 
 private:
-	ACAttackment* ComboCurr;
+	void FinishCombo();
+	UFUNCTION()
+		void Attack();
+
+public:
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE class ACAttackment* GetCurrentAttack() const { return CurrCombo; }
+
+public:
+	FGetNextCommend GetNextCommend;
+
+
+private:
+	ACAttackment* CurrCombo;
 	ACAttackment* FirstAttack;
+
+	class ACAttachment* OwnerWeapon;
+	class UCStateComponent* State;
+
 };
