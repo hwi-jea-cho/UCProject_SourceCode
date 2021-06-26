@@ -40,7 +40,14 @@ public:
 	void UpdateQuickSlots();
 
 private:
-	bool bOpenedMenu = false;
+	void OpenMenu(class UWidget* InValue);
+	void CloseMenu(class UWidget* InValue);
+	void VisibleHuds();
+	void HiddenHuds();
+
+private:
+	class UWidget* OpenedMenu;
+
 	class UCUserWidget_Menu* Menu;
 	class UCUserWidget_Talkable* Talkable;
 	class UCUserWidget_QuickSlots* QuickSlots;

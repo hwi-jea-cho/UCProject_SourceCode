@@ -31,24 +31,27 @@ public:
 	void SetStop();
 
 	void SetIdleMode();
-	void SetRollMode();
 	void SetAttackMode();
+	void SetRollMode();
+	void SetTalkMode();
 	void SetTakeMode();
 	void SetConsumMode();
-	void SetTalkMode();
 
 public:
 	UFUNCTION(BlueprintPure)
 		bool IsCanMove() const;
 
 	UFUNCTION(BlueprintPure)
-		bool IsCanOtherMontage() const;
+		bool IsCanIdle() const;
+
+	UFUNCTION(BlueprintPure)
+		bool IsCanAttack() const;
 
 	UFUNCTION(BlueprintPure)
 		bool IsCanRoll() const;
 
 	UFUNCTION(BlueprintPure)
-		bool IsCanAttack() const;
+		bool IsCanTalk() const;
 
 	UFUNCTION(BlueprintPure)
 		bool IsCanTake() const;
@@ -56,11 +59,9 @@ public:
 	UFUNCTION(BlueprintPure)
 		bool IsCanConsum() const;
 
-	UFUNCTION(BlueprintPure)
-		bool IsCanTalk() const;
-
 private:
 	void ChangeType(EStateType InNewType);
+	bool IsGround() const;
 
 public:
 	UFUNCTION(BlueprintPure)
@@ -88,8 +89,7 @@ public:
 private:
 	class UCharacterMovementComponent* OwnerMovement;
 	EStateType Type;
-	bool bRolling = false;
-	bool bJumpAction = false;
-	bool bJumpAttack = false;
+	bool bCanJumpAction = true;
+	bool bCanJumpAttack = true;
 	bool bCanMove = true;
 };

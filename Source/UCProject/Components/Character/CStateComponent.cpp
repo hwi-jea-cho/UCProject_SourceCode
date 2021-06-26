@@ -22,10 +22,10 @@ void UCStateComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 
 	CheckNull(OwnerMovement);
 
-	if (OwnerMovement->IsFalling() == false)
+	if (IsGround())
 	{
-		bJumpAction = false;
-		bJumpAttack = false;
+		bCanJumpAction = true;
+		bCanJumpAttack = true;
 	}
 }
 
@@ -42,26 +42,32 @@ void UCStateComponent::SetStop()
 
 void UCStateComponent::SetIdleMode()
 {
-	ChangeType(EStateType::Idle);
-	bRolling = false;
 	bCanMove = true;
-}
-
-void UCStateComponent::SetRollMode()
-{
-	CheckFalse(IsCanRoll());
-
-	bRolling = true;
-	bJumpAction = true;
-	ChangeType(EStateType::Roll);
+	ChangeType(EStateType::Idle);
 }
 
 void UCStateComponent::SetAttackMode()
 {
 	CheckFalse(IsCanAttack());
 
-	bJumpAttack = true;
+	bCanJumpAttack = false;
 	ChangeType(EStateType::Attack);
+}
+
+void UCStateComponent::SetRollMode()
+{
+	CheckFalse(IsCanRoll());
+
+	bCanJumpAction = false;
+	ChangeType(EStateType::Roll);
+}
+
+void UCStateComponent::SetTalkMode()
+{
+	CheckFalse(IsCanTalk());
+
+	SetStop();
+	ChangeType(EStateType::Talk);
 }
 
 void UCStateComponent::SetTakeMode()
@@ -78,48 +84,40 @@ void UCStateComponent::SetConsumMode()
 	ChangeType(EStateType::Consum);
 }
 
-void UCStateComponent::SetTalkMode()
-{
-	CheckFalse(IsCanTalk());
-
-	SetStop();
-	ChangeType(EStateType::Talk);
-}
-
 
 bool UCStateComponent::IsCanMove() const
 {
 	return (bCanMove);
 }
 
-bool UCStateComponent::IsCanOtherMontage() const
+bool UCStateComponent::IsCanIdle() const
 {
-	return (IsIdleMode());
-}
-
-bool UCStateComponent::IsCanRoll() const
-{
-	return (IsIdleMode()) && (!bRolling) && (!bJumpAction);
+	return true;
 }
 
 bool UCStateComponent::IsCanAttack() const
 {
-	return (IsIdleMode()) && (!bJumpAction) && (!bJumpAttack);
+	return IsIdleMode() && bCanJumpAction && bCanJumpAttack;
 }
 
-bool UCStateComponent::IsCanTake() const
+bool UCStateComponent::IsCanRoll() const
 {
-	return (IsIdleMode()) && (OwnerMovement->IsFalling() == false);
-}
-
-bool UCStateComponent::IsCanConsum() const
-{
-	return (IsIdleMode()) && (OwnerMovement->IsFalling() == false);
+	return IsIdleMode() && bCanJumpAction;
 }
 
 bool UCStateComponent::IsCanTalk() const
 {
-	return (IsIdleMode()) && (OwnerMovement->IsFalling() == false);
+	return IsIdleMode() && IsGround();
+}
+
+bool UCStateComponent::IsCanTake() const
+{
+	return IsIdleMode() && IsGround();
+}
+
+bool UCStateComponent::IsCanConsum() const
+{
+	return IsIdleMode() && IsGround();
 }
 
 
@@ -133,4 +131,11 @@ void UCStateComponent::ChangeType(EStateType InNewType)
 		OnStateTypeChanged.Broadcast(prevType, InNewType);
 	}
 
+}
+
+bool UCStateComponent::IsGround() const
+{
+	CheckNullResult(OwnerMovement, true);
+
+	return OwnerMovement->IsFalling() == false;
 }

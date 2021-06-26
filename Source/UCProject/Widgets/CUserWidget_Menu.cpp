@@ -28,7 +28,6 @@ void UCUserWidget_Menu::OpenNone()
 
 void UCUserWidget_Menu::Open()
 {
-	SetVisibility(ESlateVisibility::Visible);
 	bOpenedMenu = true;
 
 	Inventory = CHelpers::GetComponent<UCInventoryComponent>(GetOwningPlayerPawn());
@@ -40,7 +39,6 @@ void UCUserWidget_Menu::Closs()
 	SetMenu(EMenuType::None);
 
 	bOpenedMenu = false;
-	SetVisibility(ESlateVisibility::Hidden);
 }
 
 

@@ -41,7 +41,7 @@ void UCMenuComponent::BeginPlay()
 
 void UCMenuComponent::OpenMenu()
 {
-	CheckTrue(bOpenedMenu);
+	CheckTrue(!!OpenedMenu);
 
 	APlayerController* playerController =
 		GetWorld()->GetFirstPlayerController();
@@ -57,14 +57,14 @@ void UCMenuComponent::OpenMenu()
 	playerController->bShowMouseCursor = true;
 	Menu->SetKeyboardFocus();
 
-	bOpenedMenu = true;
+	OpenMenu(Menu);
 	Menu->Open();
 }
 
 void UCMenuComponent::CloseMenu()
 {
 	Menu->Closs();
-	bOpenedMenu = false;
+	CloseMenu(Menu);
 
 	APlayerController* playerController =
 		GetWorld()->GetFirstPlayerController();
@@ -78,10 +78,7 @@ void UCMenuComponent::CloseMenu()
 
 void UCMenuComponent::OpenTalk()
 {
-	bOpenedMenu = true;
-
-	Interactable->SetVisibility(ESlateVisibility::Hidden);
-	QuickSlots->SetVisibility(ESlateVisibility::Hidden);
+	CheckTrue(!!OpenedMenu);
 
 	if (Talkable == nullptr)
 	{
@@ -92,7 +89,7 @@ void UCMenuComponent::OpenTalk()
 		Talkable->AddToViewport();
 	}
 
-	Talkable->SetVisibility(ESlateVisibility::Visible);
+	OpenMenu(Talkable);
 }
 
 void UCMenuComponent::SetTalkMent(const FText& InName, const FText& InMent)
@@ -102,17 +99,47 @@ void UCMenuComponent::SetTalkMent(const FText& InName, const FText& InMent)
 
 void UCMenuComponent::CloseTalk()
 {
-	bOpenedMenu = false;
-
-	Talkable->SetVisibility(ESlateVisibility::Hidden);
-
-	Interactable->SetVisibility(ESlateVisibility::Visible);
-	QuickSlots->SetVisibility(ESlateVisibility::Visible);
+	CloseMenu(Talkable);
 }
 
 
 void UCMenuComponent::UpdateQuickSlots()
 {
 	QuickSlots->UpdateQuickSlots();
+}
+
+
+void UCMenuComponent::OpenMenu(UWidget* InValue)
+{
+	if (!!OpenedMenu)
+		OpenedMenu->SetVisibility(ESlateVisibility::Hidden);
+
+	InValue->SetVisibility(ESlateVisibility::Visible);
+	OpenedMenu = InValue;
+
+	HiddenHuds();
+}
+
+void UCMenuComponent::CloseMenu(UWidget* InValue)
+{
+	if (InValue == OpenedMenu)
+	{
+		OpenedMenu->SetVisibility(ESlateVisibility::Hidden);
+		OpenedMenu = nullptr;
+
+		VisibleHuds();
+	}
+}
+
+void UCMenuComponent::VisibleHuds()
+{
+	Interactable->SetVisibility(ESlateVisibility::Visible);
+	QuickSlots->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UCMenuComponent::HiddenHuds()
+{
+	Interactable->SetVisibility(ESlateVisibility::Hidden);
+	QuickSlots->SetVisibility(ESlateVisibility::Hidden);
 }
 

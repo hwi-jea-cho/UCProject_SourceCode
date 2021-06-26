@@ -46,6 +46,7 @@ void ANonPlayerCharacter::Interaction(UCInteractorComponent* InOther)
 	CheckFalse(State->IsCanTalk());
 	CheckFalse(literacy->BeginTalk(Talkable));
 
+	// 플레이어쪽으로 몸을 돌리기
 	FRotator newRotator = UKismetMathLibrary::FindLookAtRotation(
 		GetActorLocation(), InOther->GetOwner()->GetActorLocation()
 	);

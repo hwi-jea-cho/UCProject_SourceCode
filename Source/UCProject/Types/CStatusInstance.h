@@ -59,19 +59,19 @@ public:
 	void UnLink();  // 부모 자식 관계 해제
 
 private:
-	// LocalStatus가 바껴서 Status 값을 갱신
+	// LocalStatus가 바껴서 TotalStatus 값을 갱신
 	void UpdateStatus(const FStatusData& InInvData);
 
 public:
 	FORCEINLINE UCStatusInstance* GetParent() { return Parent; }
 	FORCEINLINE UCStatusInstance** GetChilds() { return Childs.GetData(); }
 	FORCEINLINE UINT ChildCount() const { return Childs.Num(); }
-	FORCEINLINE FStatusData GetData() const { return Status; }
+	FORCEINLINE FStatusData GetData() const { return TotalStatus; }
 	FORCEINLINE FStatusData GetLocalData() const { return LocalStatus; }
-	FORCEINLINE float GetMoveSpeed() const { return Status.MoveSpeed; }
-	FORCEINLINE float GetHp() const { return Status.Hp; }
-	FORCEINLINE float GetAttack() const { return Status.Attack; }
-	FORCEINLINE float GetArmor() const { return Status.Armor; }
+	FORCEINLINE float GetMoveSpeed() const { return TotalStatus.MoveSpeed; }
+	FORCEINLINE float GetHp() const { return TotalStatus.Hp; }
+	FORCEINLINE float GetAttack() const { return TotalStatus.Attack; }
+	FORCEINLINE float GetArmor() const { return TotalStatus.Armor; }
 	FORCEINLINE float GetLocalMoveSpeed() const { return LocalStatus.MoveSpeed; }
 	FORCEINLINE float GetLocalHp() const { return LocalStatus.Hp; }
 	FORCEINLINE float GetLocalAttack() const { return LocalStatus.Attack; }
@@ -84,5 +84,5 @@ private:
 	UCStatusInstance* Parent = nullptr;
 	TArray<UCStatusInstance*> Childs;
 	FStatusData LocalStatus;
-	FStatusData Status;
+	FStatusData TotalStatus;
 };

@@ -80,6 +80,7 @@ void UCStatusInstance::SetParent(UCStatusInstance* InParent)
 {
 	if (!!InParent)
 	{
+		// AddChild에서 변수 셋팅
 		InParent->AddChild(this);
 		return;
 	}
@@ -97,10 +98,14 @@ void UCStatusInstance::AddChild(UCStatusInstance* InChild)
 	if (InChild == this)
 		return;
 
-	UCStatusInstance* oldParent = InChild->Parent;
+	if (InChild->Parent == this)
+		return;
 
-	if (!!InChild->Parent)
-		InChild->Parent->RemoveChild(this);
+	UCStatusInstance* inChildParent = InChild->Parent;
+
+	// 인풋의 부모 제거
+	if (!!inChildParent)
+		inChildParent->RemoveChild(InChild);
 
 	// 루프로 연결 되는 것을 방지하기 위해 ('A - B - C - A' 이런 형태가 되면 무한 루프가 된다)
 	for (auto p = this; p != nullptr; p = p->Parent)
@@ -108,12 +113,12 @@ void UCStatusInstance::AddChild(UCStatusInstance* InChild)
 		// (A - B - C) 에서 B를 C 밑으로 부모를 넣는 다면 (A - C - B)로 만든다.
 		if (p->Parent == InChild)
 		{
-			p->SetParent(oldParent);
+			p->SetParent(inChildParent);
 			break;
 		}
 	}
 
-	Childs.Add(this);
+	Childs.Add(InChild);
 	InChild->Parent = this;
 	UpdateStatus(InChild->LocalStatus);
 }
@@ -146,7 +151,7 @@ void UCStatusInstance::UpdateStatus(const FStatusData& InInvData)
 	if (!!Parent)
 		Parent->UpdateStatus(InInvData);
 
-	Status += InInvData;
+	TotalStatus += InInvData;
 
 	if (OnStatusChanged.IsBound())
 		OnStatusChanged.Broadcast(this);

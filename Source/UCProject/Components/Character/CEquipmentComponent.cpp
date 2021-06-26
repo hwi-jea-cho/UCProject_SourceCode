@@ -135,7 +135,7 @@ void UCEquipmentComponent::ChangeWeapon()
 	}
 	else
 	{
-		EquipedWeapon = nullptr;
+		EquipedWeapon = DefaultWeapon;
 
 		DefaultWeapon->SetActorHiddenInGame(false);
 		DefaultWeapon->End_Unequip();
