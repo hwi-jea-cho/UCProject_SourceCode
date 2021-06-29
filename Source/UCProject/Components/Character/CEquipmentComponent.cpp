@@ -135,7 +135,7 @@ void UCEquipmentComponent::ChangeWeapon()
 	}
 	else
 	{
-		EquipedWeapon = DefaultWeapon;
+		EquipedWeapon = nullptr;
 
 		DefaultWeapon->SetActorHiddenInGame(false);
 		DefaultWeapon->End_Unequip();
@@ -143,6 +143,6 @@ void UCEquipmentComponent::ChangeWeapon()
 
 	if (OnChangedWeapon.IsBound())
 	{
-		OnChangedWeapon.Broadcast(EquipedWeapon);
+		OnChangedWeapon.Broadcast(GetEquipedWeapon());
 	}
 }
